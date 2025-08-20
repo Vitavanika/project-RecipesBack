@@ -1,0 +1,50 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Recipes API",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "API for managing and sharing culinary recipes."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "User authentication endpoints"
+    },
+    {
+      "name": "Users",
+      "description": "User-related endpoints"
+    },
+    {
+      "name": "Categories",
+      "description": "Recipe categories endpoints"
+    },
+    {
+      "name": "Ingredients",
+      "description": "Recipe ingredients endpoints"
+    },
+    {
+      "name": "Recipes",
+      "description": "Endpoints for managing recipes"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT authentication scheme"
+      }
+    }
+  }
+}
