@@ -32,6 +32,6 @@ responses:
               example: Successfully found recipe with id 6462a8f74c3d0ddd28897fcd!
             data:
               type: object
-              $ref: '../../../docs/components/schemas/Recipe.yaml'
+              $ref: '../../components/schemas/Recipe.yaml'
   '404':
-    $ref: '../../../docs/components/responses/404.yaml'
+    $ref: '../../components/responses/404.yaml'
