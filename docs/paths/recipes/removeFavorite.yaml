@@ -1,8 +1,8 @@
 tags:
   - Favorites
-summary: Add recipe to favorites
-operationId: addRecipeToFavorites
-description: 'Adds a recipe to the user favorites list'
+summary: Remove recipe from favorites
+operationId: removeRecipeFromFavorites
+description: 'Removes a recipe from the user favorites list'
 security:
   - bearerAuth: []
 parameters:
@@ -14,7 +14,7 @@ parameters:
       example: '64f1a2b3c9e7a1d2e8b12345'
 responses:
   '200':
-    description: Recipe successfully added to favorites
+    description: Recipe successfully removed from favorites
     content:
       application/json:
         schema:
