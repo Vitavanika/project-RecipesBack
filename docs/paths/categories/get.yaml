@@ -1,0 +1,25 @@
+tags:
+  - Categories
+summary: Отримати список категорій рецептів
+description: Публічний ендпоінт. Повертає масив категорій.
+operationId: getCategories
+responses:
+  '200':
+    description: Успішна відповідь
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found categories!
+            data:
+              type: array
+              items:
+                $ref: '../../components/schemas/Category.yaml'
+  '500':
+    description: Внутрішня помилка сервера

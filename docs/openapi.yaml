@@ -23,6 +23,11 @@ servers:
   - url: http://127.0.0.1:3000
     description: Development server
 
+paths:
+  /api/categories:
+    get:
+      $ref: './paths/categories/get.yaml'
+
 components:
   securitySchemes:
     bearerAuth:
@@ -31,3 +36,6 @@ components:
       bearerFormat: JWT
       description: JWT authentication scheme
 
+  schemas:
+    Category:
+      $ref: './components/schemas/Category.yaml'

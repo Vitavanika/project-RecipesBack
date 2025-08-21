@@ -37,6 +37,49 @@
       "description": "Endpoints for managing recipes"
     }
   ],
+  "paths": {
+    "/api/categories": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Отримати список категорій рецептів",
+        "description": "Публічний ендпоінт. Повертає масив категорій.",
+        "operationId": "getCategories",
+        "responses": {
+          "200": {
+            "description": "Успішна відповідь",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found categories!"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Category"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутрішня помилка сервера"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "securitySchemes": {
       "bearerAuth": {
@@ -44,6 +87,37 @@
         "scheme": "bearer",
         "bearerFormat": "JWT",
         "description": "JWT authentication scheme"
+      }
+    },
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "66c3b9b6c8c9f1a6b2f1d123"
+          },
+          "title": {
+            "type": "string",
+            "example": "Breakfast"
+          },
+          "slug": {
+            "type": "string",
+            "example": "breakfast"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2025-08-20T10:11:12.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2025-08-20T10:11:12.000Z"
+          }
+        },
+        "required": [
+          "title",
+          "slug"
+        ]
       }
     }
   }

@@ -1,0 +1,20 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: 66c3b9b6c8c9f1a6b2f1d123
+  title:
+    type: string
+    example: Breakfast
+  slug:
+    type: string
+    example: breakfast
+  createdAt:
+    type: string
+    example: 2025-08-20T10:11:12.000Z
+  updatedAt:
+    type: string
+    example: 2025-08-20T10:11:12.000Z
+required:
+  - title
+  - slug
