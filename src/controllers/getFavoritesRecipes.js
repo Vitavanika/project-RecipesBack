@@ -1,5 +1,5 @@
 import { getFavoritesRecipes as getFavoritesRecipesService } from "../services/getFavoritesRecipes.js";
-import { parsePaginationParams } from "../utils/pagination.js";
+import { parsePaginationParams } from "../utils/parsePaginationParams.js";
 
 export const getFavoritesRecipes = async (req, res) => {
     const userId = req.user._id;
