@@ -39,3 +39,14 @@ components:
   schemas:
     Category:
       $ref: './components/schemas/Category.yaml'
+  schemas:
+    recipe:
+      $ref: ./components/schemas/Recipe.yaml
+    user:
+      $ref: ./components/schemas/User.yaml
+    ingredient:
+      $ref: ./components/schemas/Ingredient.yaml
+    category:
+      $ref: ./components/schemas/Category.yaml
+    session:
+      $ref: ./components/schemas/Session.yaml
