@@ -1,0 +1,2 @@
+/api/recipes/my:
+  $ref: "./my.yaml"

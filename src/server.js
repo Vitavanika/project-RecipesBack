@@ -27,8 +27,19 @@ export const setupServer = () => {
   app.use(notFoundHandler);
   app.use(errorHandler);
 
+  // глобальний обробник помилок (важливо, щоб був в кінці)
+app.use((err, _req, res, _next) => {
+  const status = err.status || 500;
+  res.status(status).json({
+    status,
+    message: err.message || "Server error",
+    data: null,
+  });
+});
+
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 };
+
