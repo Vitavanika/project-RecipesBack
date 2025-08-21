@@ -1,0 +1,62 @@
+type: object
+required:
+  - _id
+  - userId
+  - name
+  - description
+  - ingredients
+  - instructions
+  - category
+  - cookingTime
+properties:
+  _id:
+    description: "Recipe's unique identifier"
+    type: string
+    example: 65e4decdd286b30065d54af9
+  userId:
+    description: 'ID of the user who created the recipe'
+    type: string
+    example: 65e4decdd286b30065d54af9
+  name:
+    description: 'Name of the recipe'
+    type: string
+    example: 'Spaghetti Carbonara'
+  photo:
+    description: 'URL of the recipe photo'
+    type: string
+    format: uri
+    example: 'https://example.com/photo.jpg'
+  description:
+    description: 'Short description of the recipe'
+    type: string
+    example: 'A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.'
+  ingredients:
+    description: 'List of ingredients required for the recipe. Note: swagger has garbage support for arrays, so if youre referencing this schema as request body, write it as one item like so: [{"ingredient": "Potato", "quantity": "200g"}, {"ingredient": "Pickle", "quantity": "100g"}]'
+    type: array
+    items:
+      type: object
+      properties:
+        ingredient:
+          description: 'ID of the ingredient'
+          type: string
+          example: '65e4decdd286b30065d54af9'
+        quantity:
+          description: 'Quantity of the ingredient'
+          type: string
+          example: '200g'
+  instructions:
+    type: string
+    description: 'Step-by-step instructions to prepare the recipe'
+    example: 'Cook spaghetti, mix with eggs and cheese, add bacon and pepper.'
+  category:
+    description: 'ID of the category of the recipe '
+    type: string
+    example: '65e4decdd286b30065d54af9'
+  cookingTime:
+    description: 'Estimated cooking time in minutes'
+    type: integer
+    example: 30
+  foodEnergy:
+    description: 'Estimated food energy in kcal'
+    type: number
+    example: 600
