@@ -44,6 +44,6 @@ components:
     ingredient:
       $ref: ./components/schemas/Ingredient.yaml
     category:
-      $ref: components/schemas/Category.yaml
+      $ref: ./components/schemas/Category.yaml
     session:
       $ref: ./components/schemas/Session.yaml
