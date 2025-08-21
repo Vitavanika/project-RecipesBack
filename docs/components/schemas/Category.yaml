@@ -1,8 +1,13 @@
 type: object
 properties:
   _id:
+    description: "Category's unique identifier"
     type: string
-    example: 66c3b9b6c8c9f1a6b2f1d123
+    example: '65e4decdd286b30065d54af9'
+  name:
+    description: 'Name of the category'
+    type: string
+    example: 'Main Course'
   title:
     type: string
     example: Breakfast
@@ -11,22 +16,14 @@ properties:
     example: breakfast
   createdAt:
     type: string
+    format: date-time
     example: 2025-08-20T10:11:12.000Z
   updatedAt:
     type: string
+    format: date-time
     example: 2025-08-20T10:11:12.000Z
-required:
-  - title
-  - slug
 required:
   - _id
   - name
-properties:
-  _id:
-    description: "Category's unique identifier"
-    type: string
-    example: '65e4decdd286b30065d54af9'
-  name:
-    description: 'Name of the category'
-    type: string
-    example: 'Main Course'
+  - title
+  - slug
