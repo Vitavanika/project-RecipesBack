@@ -30,4 +30,14 @@ components:
       scheme: bearer
       bearerFormat: JWT
       description: JWT authentication scheme
-
+  schemas:
+    recipe:
+      $ref: ./components/schemas/Recipe.yaml
+    user:
+      $ref: ./components/schemas/User.yaml
+    ingredient:
+      $ref: ./components/schemas/Ingredient.yaml
+    category:
+      $ref: ./components/schemas/Category.yaml
+    session:
+      $ref: ./components/schemas/Session.yaml
