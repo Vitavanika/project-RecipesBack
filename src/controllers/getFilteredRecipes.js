@@ -3,11 +3,9 @@ import { getFilteredRecipes as getFilteredRecipesService } from "../services/get
 
 export const getFilteredRecipes = async (req, res) => {
 
-    const { page, perPage } = parsePaginationParams(req.query);
+    const { page, perPage, category, ingredients, searchPhrase } = parsePaginationParams(req.query);
 
-    const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
-
-    const filteredRecipes = await getFilteredRecipesService({ page, perPage, filters });
+    const filteredRecipes = await getFilteredRecipesService({ page, perPage, category, ingredients, searchPhrase });
 
     res.status(200).json({
         message: 'Filtered recipes retrieved successfully',
