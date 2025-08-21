@@ -1,6 +1,6 @@
 import { Router } from "express";
-import ctrlWrapper from "../utils/ctrlWrapper";
-import getFilteredRecipes from "../controllers/getFilteredRecipes.js";
+import ctrlWrapper from "../utils/ctrlWrapper.js";
+import { getFilteredRecipes } from "../controllers/getFilteredRecipes.js";
 
 const filteredRecepesRouter = Router();
 

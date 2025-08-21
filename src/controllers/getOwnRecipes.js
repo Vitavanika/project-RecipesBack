@@ -1,4 +1,4 @@
-import { parsePaginationParams } from "../utils/parsePaginationParams";
+import { parsePaginationParams } from "../utils/parsePaginationParams.js";
 import { getOwnRecipes as getOwnRecipesService } from "../services/getOwnRecipes.js";
 
 export const getOwnRecipes = async (req, res) => {

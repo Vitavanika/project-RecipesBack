@@ -4,9 +4,9 @@ import { Types } from 'mongoose';
 export const getFilteredRecipes = async ({
     page = 1,
     perPage = 12,
-    category = null,
+    category,
     ingredients = [],
-    searchPhrase = '',
+    searchPhrase,
 }) => {
 
     const filter = {};
@@ -15,12 +15,16 @@ export const getFilteredRecipes = async ({
     const skip = page > 0 ? (page - 1) * perPage : 0;
 
     if (category) {
-        filter.category = category;
+        filter.categoryId = category;
     }
 
-    if (ingredients.length > 0) {
+    if (ingredients && ingredients.length > 0) {
+        const ingredientsArr = (typeof ingredients === 'string' ? ingredients.split(',') : ingredients)
+            .map(id => id.trim())
+            .filter(Boolean);
+
         filter["ingredients.ingredientId"] = {
-            $in: ingredients.map(id => Types.ObjectId.createFromHexString(id))
+            $in: ingredientsArr.map(id => Types.ObjectId.createFromHexString(id))
         };
     }
 
@@ -31,10 +35,7 @@ export const getFilteredRecipes = async ({
         ];
     }
 
-
-    const recipesQuery = RecipesCollection.find({
-        ...filter
-    });
+    const recipesQuery = RecipesCollection.find(filter);
 
     const [total, recipes] = await Promise.all([
         RecipesCollection.countDocuments(filter),
@@ -47,12 +48,13 @@ export const getFilteredRecipes = async ({
     const totalPages = Math.ceil(total / perPage);
 
     return {
-        data: recipes,
+        hits: recipes,
         page,
         perPage,
         totalItems: total,
         totalPages,
         hasPreviousPage: page > 1,
-        hasNextPage: page < totalPages
+        hasNextPage: page < totalPages,
+        ...(recipes.length === 0 && { message: 'No recipes found' })
     };
 }
