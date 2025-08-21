@@ -1,0 +1,13 @@
+type: object
+required:
+  - _id
+  - name
+properties:
+  _id:
+    description: "Ingredient's unique identifier"
+    type: string
+    example: '65e4decdd286b30065d54af9'
+  name:
+    description: 'Name of the category'
+    type: string
+    example: 'Potato'
