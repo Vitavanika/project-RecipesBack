@@ -1,30 +1,12 @@
 tags:
   - Auth
-summary: Login
-operationId: login
-description: Login
+summary: Refresh token
+operationId: refresh
+description: Get fresh token and refresh token for the current user
 security: []
-requestBody:
-  required: true
-  content:
-    application/json:
-      schema:
-        type: object
-        required:
-          - email
-          - password
-        properties:
-          email:
-            description: "User's email"
-            type: string
-            example: "test@test.ua"
-          password:
-            description: "User's password"
-            type: string
-            example: "12345678"
 responses:
   "200":
-    description: User logged in
+    description: Session refreshed
     content:
       application/json:
         schema:
@@ -39,7 +21,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully logged in an user!
+              example: Successfully refreshed a session!
             data:
               type: object
               properties:

@@ -1,0 +1,15 @@
+tags:
+  - Auth
+summary: Logout
+operationId: logout
+description: Logout
+security: []
+responses:
+  "204":
+    description: No Content
+  "400":
+    $ref: ../../components/responses/400.yaml
+  "401":
+    $ref: ../../components/responses/401.yaml
+  "500":
+    $ref: ../../components/responses/500.yaml

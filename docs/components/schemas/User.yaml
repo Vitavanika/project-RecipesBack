@@ -1,0 +1,31 @@
+type: object
+required:
+  - _id
+  - name
+  - email
+  - password
+properties:
+  _id:
+    description: "User's unique identifier"
+    type: string
+    example: 65e4decdd286b30065d54af9
+  name:
+    description: 'Name of the user'
+    type: string
+    example: 'John Doe'
+  email:
+    description: 'Email address of the user'
+    type: string
+    format: email
+    example: 'user@example.com'
+  password:
+    description: 'Password for the user account'
+    type: string
+    format: password
+    example: 'strongpassword123'
+  favouriteRecipes:
+    description: "List of IDs of the user's favourite recipes"
+    type: array
+    items:
+      type: string
+      example: '65e4decdd286b30065d54af9'
