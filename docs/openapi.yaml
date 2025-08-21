@@ -37,9 +37,6 @@ components:
       description: JWT authentication scheme
 
   schemas:
-    Category:
-      $ref: './components/schemas/Category.yaml'
-  schemas:
     recipe:
       $ref: ./components/schemas/Recipe.yaml
     user:
@@ -47,6 +44,6 @@ components:
     ingredient:
       $ref: ./components/schemas/Ingredient.yaml
     category:
-      $ref: ./components/schemas/Category.yaml
+      $ref: components/schemas/Category.yaml
     session:
       $ref: ./components/schemas/Session.yaml
