@@ -10,4 +10,4 @@ properties:
   name:
     description: 'Name of the category'
     type: string
-    example: 'Potato'
+    example: 'Cabbage'

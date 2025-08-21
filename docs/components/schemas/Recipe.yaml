@@ -6,7 +6,7 @@ required:
   - description
   - ingredients
   - instructions
-  - category
+  - categoryId
   - cookingTime
 properties:
   _id:
@@ -20,7 +20,8 @@ properties:
   name:
     description: 'Name of the recipe'
     type: string
-    example: 'Spaghetti Carbonara'
+    example: 'Irish stew'
+    maxLength: 64
   photo:
     description: 'URL of the recipe photo'
     type: string
@@ -30,13 +31,14 @@ properties:
     description: 'Short description of the recipe'
     type: string
     example: 'A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.'
+    maxLength: 200
   ingredients:
     description: 'List of ingredients required for the recipe. Note: swagger has garbage support for arrays, so if youre referencing this schema as request body, write it as one item like so: [{"ingredient": "Potato", "quantity": "200g"}, {"ingredient": "Pickle", "quantity": "100g"}]'
     type: array
     items:
       type: object
       properties:
-        ingredient:
+        ingredientId:
           description: 'ID of the ingredient'
           type: string
           example: '65e4decdd286b30065d54af9'
@@ -44,11 +46,14 @@ properties:
           description: 'Quantity of the ingredient'
           type: string
           example: '200g'
+    minItems: 2
+    maxItems: 16
   instructions:
     type: string
     description: 'Step-by-step instructions to prepare the recipe'
     example: 'Cook spaghetti, mix with eggs and cheese, add bacon and pepper.'
-  category:
+    maxLength: 1200
+  categoryId:
     description: 'ID of the category of the recipe '
     type: string
     example: '65e4decdd286b30065d54af9'
@@ -56,7 +61,11 @@ properties:
     description: 'Estimated cooking time in minutes'
     type: integer
     example: 30
+    minimum: 1
+    maximum: 360
   foodEnergy:
     description: 'Estimated food energy in kcal'
     type: number
     example: 600
+    minimum: 1
+    maximum: 10000
