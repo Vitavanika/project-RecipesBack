@@ -1,10 +1,10 @@
 import { Router } from "express";
-import ctrlWrapper from "../utils/ctrlWrapper.js";
 import { getFavoritesRecipes } from "../controllers/getFavoritesRecipes.js";
-// import authenticate from "../middlewares/authenticate.js";
+import { authenticate } from "../middlewares/authenticate.js";
+import ctrlWrapper from "../utils/ctrlWrapper.js";
 
-const favoritesRecepesRouter = Router();
+const favoritesRecipesRouter = Router();
 
-favoritesRecepesRouter.get('/', ctrlWrapper(getFavoritesRecipes));
+favoritesRecipesRouter.get('/', authenticate, ctrlWrapper(getFavoritesRecipes));
 
-export default favoritesRecepesRouter;
+export default favoritesRecipesRouter;

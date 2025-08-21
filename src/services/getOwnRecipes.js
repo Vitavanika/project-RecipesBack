@@ -1,3 +1,3 @@
-export const getOwnRecipes = async (req, res) => {
+export const getOwnRecipes = async () => {
 
 }
