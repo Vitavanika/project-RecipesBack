@@ -1,11 +1,11 @@
 tags:
   - Categories
-summary: Отримати список категорій рецептів
-description: Публічний ендпоінт. Повертає масив категорій.
+summary: Get a list of recipe categories
+description: Public endpoint. Returns an array of categories.
 operationId: getCategories
 responses:
   '200':
-    description: Успішна відповідь
+    description: Successful response
     content:
       application/json:
         schema:
@@ -22,4 +22,4 @@ responses:
               items:
                 $ref: '../../components/schemas/Category.yaml'
   '500':
-    description: Внутрішня помилка сервера
+    description: Internal server error
