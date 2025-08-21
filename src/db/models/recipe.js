@@ -38,5 +38,8 @@ const recipeSchema = new Schema(
 );
 
 recipeSchema.index({ userId: 1 });
+recipeSchema.index({ categoryId: 1 });
+recipeSchema.index({ 'ingredients.ingredientId': 1 });
+recipeSchema.index({ name: 'text', description: 'text' });
 
 export const RecipesCollection = model('recipes', recipeSchema);

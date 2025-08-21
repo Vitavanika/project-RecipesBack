@@ -15,6 +15,8 @@ const usersSchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 
+usersSchema.index({ favouriteRecipes: 1 });
+
 usersSchema.methods.toJSON = function () {
   const obj = this.toObject();
   delete obj.password;
