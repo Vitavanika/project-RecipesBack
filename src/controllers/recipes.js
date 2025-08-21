@@ -1,5 +1,8 @@
-import mongoose from "mongoose";
-import createHttpError from 'http-errors';
+import 'dotenv/config';
+import { createRecipe } from "../services/recipes.js";
+import { getEnvVariable } from "../utils/getEnvVariable.js";
+import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
+import { saveFileToUploadDir } from "../utils/saveFileToUploadDir.js";
 
 
 export const createRecipeController = async (req, res) => {
@@ -14,7 +17,7 @@ export const createRecipeController = async (req, res) => {
 
   const payload = {
     ...req.body,           
-    ownerId: req.owner.id, 
+    // ownerId: req.owner.id, 
   };
 
   if (thumbUrl) payload.photo = thumbUrl;
