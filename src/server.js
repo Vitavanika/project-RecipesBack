@@ -3,6 +3,8 @@ import cors from 'cors';
 import pino from 'pino-http';
 import authRouter from './routers/auth.js';
 import recipesRouter from './routers/recipes.js';
+import usersRouter from './routers/users.js';
+
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../docs/swagger.json' with { type: 'json' };
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -22,6 +24,8 @@ export const setupServer = () => {
 
   app.use('/auth', authRouter);
   app.use('/recipes', recipesRouter);
+  app.use('/api/users', usersRouter);
+
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   app.use(notFoundHandler);
