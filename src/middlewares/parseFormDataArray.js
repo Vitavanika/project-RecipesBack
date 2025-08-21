@@ -20,7 +20,7 @@ export const parseFormDataArrays = (req, res, next) => {
         if (!Array.isArray(req.body[key])) {
           return res.status(400).json({ message: `${key} must be an array` });
         }
-      } catch (error) {
+      } catch {
         return res
           .status(400)
           .json({ message: `Invalid JSON format for field "${key}"` });
