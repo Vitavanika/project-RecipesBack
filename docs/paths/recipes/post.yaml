@@ -9,66 +9,64 @@ requestBody:
   required: true
   content:
     required:
-      - title
+      - name
       - category
-      - owner
       - instructions
-      - time
       - ingredients
+      - cookingTime
     properties:
-      title:
+      name:
         type: string
         description: Recipe title
         example: "Scrambled Eggs"
-      category:
-        type: string
-        description: Category ObjectId
-        example: "64e4a123abc456def7890123"
-      owner:
-        type: string
-        description: Owner (User) ObjectId
-        example: "64e4a123abc456def7890456"
-      area:
-        type: string
-        description: Recipe coutry or origin
-        example: "Italian"
-      instructions:
-        type: string
-        description: Cooking instructions
-        example: "Crack eggs into a bowl. Whisk. Heat a pan with a little butter. Cook eggs while stirring until soft."
-      description:
-        type: string
-        description: Short description
-        example: "Quick and easy scrambled eggs for breakfast."
-      thumb:
-        type: string
-        format: binary
-        description: Recipe image
-      time:
-        type: integer
-        description: Preparation time in minutes
-        example: 10
-      calories:
-        type: number
-        description: Total calories
-        example: 450
-      ingredients:
-        type: array
-        description: List of ingredients with measuresements
-        items:
-          type: object
-          required:
-            - ingredient
-            - measure
-          properties:
-            ingredient:
-              type: string
-              description: Ingredient ObjectId
-              example: "64e4a123abc456def7890789"
-            measure:
-              type: string
-              description: Measurement or quantity
-              example: "200g"
+       name:
+            type: string
+            maxLength: 64
+            description: Recipe name
+            example: "Scrambled Eggs"
+        description:
+          type: string
+          maxLength: 200
+          description: Short description of the recipe
+          example: "Easy scrambled eggs for breakfast."
+        ingredients:
+          type: array
+          description: List of ingredients with quantities
+          items:
+            type: object
+            required:
+              - name
+              - quantity
+            properties:
+              name:
+                type: string
+                description: Ingredient name
+                example: "Eggs"
+              quantity:
+                type: string
+                description: Ingredient quantity
+                example: "2 large"
+        instructions:
+          type: string
+          maxLength: 1200
+          description: Step-by-step cooking instructions
+          example: "Crack eggs into a bowl. Whisk. Heat a pan with butter. Cook while stirring."
+        category:
+          type: string
+          description: Recipe category name
+          example: "Breakfast"
+        cookingTime:
+          type: string
+          description: Cooking time in minutes
+          example: "15"
+        foodEnergy:
+          type: number
+          description: Total calories
+          example: 450
+        photo:
+          type: string
+          format: binary
+          description: Optional recipe image
 responses:
   '201':
     description: Successfully created recipe

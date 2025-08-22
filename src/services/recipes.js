@@ -6,8 +6,3 @@ export const getPublicRecipeById = async (recipeId) => {
 };
 
 
-
-export const createRecipe = async (payload) => {
-  const recipe = await RecipesCollection.create(payload);
-  return recipe;
-};

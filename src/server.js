@@ -8,6 +8,9 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../docs/swagger.json' with { type: 'json' };
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { authenticate } from "./middlewares/authenticate.js";
+import { UPLOAD_DIR } from './constants.js';
+
 export const setupServer = () => {
   const app = express();
 
@@ -23,8 +26,9 @@ export const setupServer = () => {
   app.use(express.json());
 
   app.use('/auth', authRouter);
-  app.use('/recipes', recipesRouter);
+  app.use('/recipes', authenticate, recipesRouter);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  app.use('/uploads', express.static(UPLOAD_DIR));
 
   app.use(notFoundHandler);
   app.use(errorHandler);
