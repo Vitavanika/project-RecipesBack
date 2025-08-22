@@ -15,3 +15,4 @@ export const getCurrentUser = async (req, res) => {
 export default {
   getCurrentUser: ctrlWrapper(getCurrentUser),
 };
+// ss
