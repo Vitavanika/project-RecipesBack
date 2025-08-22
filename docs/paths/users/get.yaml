@@ -1,0 +1,30 @@
+get:
+  tags:
+    - Users
+  summary: Get current user information
+  description: Retrieve information about the currently authenticated user
+  security:
+    - BearerAuth: []
+  responses:
+    '200':
+      description: User information retrieved successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              code:
+                type: integer
+                example: 200
+              data:
+                type: object
+                properties:
+                  user:
+                    $ref: '../components/schemas/User.yaml'
+    '401':
+      $ref: '../components/responses/401.yaml'
+    '500':
+      $ref: '../components/responses/500.yaml'

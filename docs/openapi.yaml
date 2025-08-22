@@ -39,10 +39,13 @@ paths:
   /auth/refresh:
     post:
       $ref: './paths/auth/refresh.yaml'
+  /api/users:
+    get:
+      $ref: './paths/users/get.yaml'
 
 components:
   securitySchemes:
-    bearerAuth:
+    BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
