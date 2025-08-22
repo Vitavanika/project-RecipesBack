@@ -38,6 +38,47 @@
     }
   ],
   "paths": {
+    "/api/categories": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get a list of recipe categories",
+        "description": "Public endpoint. Returns an array of categories.",
+        "operationId": "getCategories",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found categories!"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Category"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": [
@@ -317,21 +358,6 @@
       }
     },
     "schemas": {
-      "recipe": {
-        "$ref": "#/components/schemas/Recipe"
-      },
-      "user": {
-        "$ref": "#/components/schemas/User"
-      },
-      "ingredient": {
-        "$ref": "#/components/schemas/Ingredient"
-      },
-      "category": {
-        "$ref": "#/components/schemas/Category"
-      },
-      "session": {
-        "$ref": "#/components/schemas/Session"
-      },
       "Recipe": {
         "type": "object",
         "required": [
@@ -341,7 +367,7 @@
           "description",
           "ingredients",
           "instructions",
-          "category",
+          "categoryId",
           "cookingTime"
         ],
         "properties": {
@@ -358,7 +384,8 @@
           "name": {
             "description": "Name of the recipe",
             "type": "string",
-            "example": "Spaghetti Carbonara"
+            "example": "Irish stew",
+            "maxLength": 64
           },
           "photo": {
             "description": "URL of the recipe photo",
@@ -369,7 +396,8 @@
           "description": {
             "description": "Short description of the recipe",
             "type": "string",
-            "example": "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper."
+            "example": "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.",
+            "maxLength": 200
           },
           "ingredients": {
             "description": "List of ingredients required for the recipe. Note: swagger has garbage support for arrays, so if youre referencing this schema as request body, write it as one item like so: [{\"ingredient\": \"Potato\", \"quantity\": \"200g\"}, {\"ingredient\": \"Pickle\", \"quantity\": \"100g\"}]",
@@ -377,7 +405,7 @@
             "items": {
               "type": "object",
               "properties": {
-                "ingredient": {
+                "ingredientId": {
                   "description": "ID of the ingredient",
                   "type": "string",
                   "example": "65e4decdd286b30065d54af9"
@@ -388,14 +416,17 @@
                   "example": "200g"
                 }
               }
-            }
+            },
+            "minItems": 2,
+            "maxItems": 16
           },
           "instructions": {
             "type": "string",
             "description": "Step-by-step instructions to prepare the recipe",
-            "example": "Cook spaghetti, mix with eggs and cheese, add bacon and pepper."
+            "example": "Cook spaghetti, mix with eggs and cheese, add bacon and pepper.",
+            "maxLength": 1200
           },
-          "category": {
+          "categoryId": {
             "description": "ID of the category of the recipe ",
             "type": "string",
             "example": "65e4decdd286b30065d54af9"
@@ -403,12 +434,16 @@
           "cookingTime": {
             "description": "Estimated cooking time in minutes",
             "type": "integer",
-            "example": 30
+            "example": 30,
+            "minimum": 1,
+            "maximum": 360
           },
           "foodEnergy": {
             "description": "Estimated food energy in kcal",
             "type": "number",
-            "example": 600
+            "example": 600,
+            "minimum": 1,
+            "maximum": 10000
           }
         }
       },
@@ -447,6 +482,7 @@
             "description": "List of IDs of the user's favourite recipes",
             "type": "array",
             "items": {
+              "description": "ID of a favourite recipe",
               "type": "string",
               "example": "65e4decdd286b30065d54af9"
             }
@@ -468,16 +504,12 @@
           "name": {
             "description": "Name of the category",
             "type": "string",
-            "example": "Potato"
+            "example": "Cabbage"
           }
         }
       },
       "Category": {
         "type": "object",
-        "required": [
-          "_id",
-          "name"
-        ],
         "properties": {
           "_id": {
             "description": "Category's unique identifier",
@@ -488,8 +520,32 @@
             "description": "Name of the category",
             "type": "string",
             "example": "Main Course"
+          },
+          "title": {
+            "type": "string",
+            "example": "Breakfast"
+          },
+          "slug": {
+            "type": "string",
+            "example": "breakfast"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-08-20T10:11:12.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-08-20T10:11:12.000Z"
           }
-        }
+        },
+        "required": [
+          "_id",
+          "name",
+          "title",
+          "slug"
+        ]
       },
       "Session": {
         "type": "object",
@@ -587,7 +643,7 @@
         }
       },
       "409": {
-        "description": "ConflictError",
+        "description": "Conflict Error",
         "content": {
           "application/json": {
             "schema": {
@@ -600,7 +656,7 @@
               "properties": {
                 "status": {
                   "type": "integer",
-                  "example": 404
+                  "example": 409
                 },
                 "message": {
                   "type": "string",
