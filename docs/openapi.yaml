@@ -39,6 +39,9 @@ paths:
   /auth/refresh:
     post:
       $ref: './paths/auth/refresh.yaml'
+  /users/me:
+    get:
+      $ref: './paths/users/getMe.yaml'
 
 components:
   securitySchemes:
