@@ -78,6 +78,274 @@
           }
         }
       }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register new user",
+        "operationId": "register",
+        "description": "Register new user",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "description": "User's name",
+                    "type": "string",
+                    "example": "User"
+                  },
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "test@test.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "12345678"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully registered a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "email",
+                        "favouriteRecipes",
+                        "_id"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "User"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "test@test.com"
+                        },
+                        "favouriteRecipes": {
+                          "type": "array"
+                        },
+                        "_id": {
+                          "type": "string",
+                          "example": "6898ca1b9f0d05aadcb9da53"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login",
+        "operationId": "login",
+        "description": "Login",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "test@test.ua"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "12345678"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in an user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "cqPzZEQl8Oyt0/tjTMqQiru5Te+jAHkTB2hm/5Fo"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout",
+        "operationId": "logout",
+        "description": "Logout",
+        "security": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh token",
+        "operationId": "refresh",
+        "description": "Get fresh token and refresh token for the current user",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Session refreshed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed a session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "cqPzZEQl8Oyt0/tjTMqQiru5Te+jAHkTB2hm/5Fo"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -90,20 +358,155 @@
       }
     },
     "schemas": {
-      "recipe": {
-        "$ref": "#/components/schemas/Recipe"
+      "Recipe": {
+        "type": "object",
+        "required": [
+          "_id",
+          "userId",
+          "name",
+          "description",
+          "ingredients",
+          "instructions",
+          "categoryId",
+          "cookingTime"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Recipe's unique identifier",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "userId": {
+            "description": "ID of the user who created the recipe",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "name": {
+            "description": "Name of the recipe",
+            "type": "string",
+            "example": "Irish stew",
+            "maxLength": 64
+          },
+          "photo": {
+            "description": "URL of the recipe photo",
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com/photo.jpg"
+          },
+          "description": {
+            "description": "Short description of the recipe",
+            "type": "string",
+            "example": "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.",
+            "maxLength": 200
+          },
+          "ingredients": {
+            "description": "List of ingredients required for the recipe. Note: swagger has garbage support for arrays, so if youre referencing this schema as request body, write it as one item like so: [{\"ingredient\": \"Potato\", \"quantity\": \"200g\"}, {\"ingredient\": \"Pickle\", \"quantity\": \"100g\"}]",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ingredientId": {
+                  "description": "ID of the ingredient",
+                  "type": "string",
+                  "example": "65e4decdd286b30065d54af9"
+                },
+                "quantity": {
+                  "description": "Quantity of the ingredient",
+                  "type": "string",
+                  "example": "200g"
+                }
+              }
+            },
+            "minItems": 2,
+            "maxItems": 16
+          },
+          "instructions": {
+            "type": "string",
+            "description": "Step-by-step instructions to prepare the recipe",
+            "example": "Cook spaghetti, mix with eggs and cheese, add bacon and pepper.",
+            "maxLength": 1200
+          },
+          "categoryId": {
+            "description": "ID of the category of the recipe ",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "cookingTime": {
+            "description": "Estimated cooking time in minutes",
+            "type": "integer",
+            "example": 30,
+            "minimum": 1,
+            "maximum": 360
+          },
+          "foodEnergy": {
+            "description": "Estimated food energy in kcal",
+            "type": "number",
+            "example": 600,
+            "minimum": 1,
+            "maximum": 10000
+          }
+        }
       },
-      "user": {
-        "$ref": "#/components/schemas/User"
+      "User": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's unique identifier",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "name": {
+            "description": "Name of the user",
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "description": "Email address of the user",
+            "type": "string",
+            "format": "email",
+            "example": "user@example.com"
+          },
+          "password": {
+            "description": "Password for the user account",
+            "type": "string",
+            "format": "password",
+            "example": "strongpassword123"
+          },
+          "favouriteRecipes": {
+            "description": "List of IDs of the user's favourite recipes",
+            "type": "array",
+            "items": {
+              "description": "ID of a favourite recipe",
+              "type": "string",
+              "example": "65e4decdd286b30065d54af9"
+            }
+          }
+        }
       },
-      "ingredient": {
-        "$ref": "#/components/schemas/Ingredient"
-      },
-      "category": {
-        "$ref": "#/components/schemas/Category"
-      },
-      "session": {
-        "$ref": "#/components/schemas/Session"
+      "Ingredient": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Ingredient's unique identifier",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "name": {
+            "description": "Name of the category",
+            "type": "string",
+            "example": "Cabbage"
+          }
+        }
       },
       "Category": {
         "type": "object",
@@ -143,146 +546,6 @@
           "title",
           "slug"
         ]
-      },
-      "Recipe": {
-        "type": "object",
-        "required": [
-          "_id",
-          "userId",
-          "name",
-          "description",
-          "ingredients",
-          "instructions",
-          "category",
-          "cookingTime"
-        ],
-        "properties": {
-          "_id": {
-            "description": "Recipe's unique identifier",
-            "type": "string",
-            "example": "65e4decdd286b30065d54af9"
-          },
-          "userId": {
-            "description": "ID of the user who created the recipe",
-            "type": "string",
-            "example": "65e4decdd286b30065d54af9"
-          },
-          "name": {
-            "description": "Name of the recipe",
-            "type": "string",
-            "example": "Spaghetti Carbonara"
-          },
-          "photo": {
-            "description": "URL of the recipe photo",
-            "type": "string",
-            "format": "uri",
-            "example": "https://example.com/photo.jpg"
-          },
-          "description": {
-            "description": "Short description of the recipe",
-            "type": "string",
-            "example": "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper."
-          },
-          "ingredients": {
-            "description": "List of ingredients required for the recipe. Note: swagger has garbage support for arrays, so if youre referencing this schema as request body, write it as one item like so: [{\"ingredient\": \"Potato\", \"quantity\": \"200g\"}, {\"ingredient\": \"Pickle\", \"quantity\": \"100g\"}]",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "ingredient": {
-                  "description": "ID of the ingredient",
-                  "type": "string",
-                  "example": "65e4decdd286b30065d54af9"
-                },
-                "quantity": {
-                  "description": "Quantity of the ingredient",
-                  "type": "string",
-                  "example": "200g"
-                }
-              }
-            }
-          },
-          "instructions": {
-            "type": "string",
-            "description": "Step-by-step instructions to prepare the recipe",
-            "example": "Cook spaghetti, mix with eggs and cheese, add bacon and pepper."
-          },
-          "category": {
-            "description": "ID of the category of the recipe ",
-            "type": "string",
-            "example": "65e4decdd286b30065d54af9"
-          },
-          "cookingTime": {
-            "description": "Estimated cooking time in minutes",
-            "type": "integer",
-            "example": 30
-          },
-          "foodEnergy": {
-            "description": "Estimated food energy in kcal",
-            "type": "number",
-            "example": 600
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "required": [
-          "_id",
-          "name",
-          "email",
-          "password"
-        ],
-        "properties": {
-          "_id": {
-            "description": "User's unique identifier",
-            "type": "string",
-            "example": "65e4decdd286b30065d54af9"
-          },
-          "name": {
-            "description": "Name of the user",
-            "type": "string",
-            "example": "John Doe"
-          },
-          "email": {
-            "description": "Email address of the user",
-            "type": "string",
-            "format": "email",
-            "example": "user@example.com"
-          },
-          "password": {
-            "description": "Password for the user account",
-            "type": "string",
-            "format": "password",
-            "example": "strongpassword123"
-          },
-          "favouriteRecipes": {
-            "description": "List of IDs of the user's favourite recipes",
-            "type": "array",
-            "items": {
-              "type": "string",
-              "example": "65e4decdd286b30065d54af9"
-            }
-          }
-        }
-      },
-      "Ingredient": {
-        "type": "object",
-        "required": [
-          "_id",
-          "name"
-        ],
-        "properties": {
-          "_id": {
-            "description": "Ingredient's unique identifier",
-            "type": "string",
-            "example": "65e4decdd286b30065d54af9"
-          },
-          "name": {
-            "description": "Name of the category",
-            "type": "string",
-            "example": "Potato"
-          }
-        }
       },
       "Session": {
         "type": "object",
@@ -326,6 +589,114 @@
             "type": "string",
             "format": "date-time",
             "example": "2023-12-01T12:00:00Z"
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Bad Request"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Unauthorized Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Conflict Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "ConflictError"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email in use"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
           }
         }
       }
