@@ -3,8 +3,6 @@ tags:
 summary: Get recipe by id
 operationId: getRecipe
 description: 'Get recipe by id'
-security:
-  - bearerAuth: []
 parameters:
   - in: path
     name: id
@@ -14,7 +12,7 @@ parameters:
       example: '6462a8f74c3d0ddd28897fcd'
 responses:
   '200':
-    description: 'Get recipe by id'
+    description: 'Recipe successfully found'
     content:
       application/json:
        schema:
