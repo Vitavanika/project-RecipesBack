@@ -1,0 +1,25 @@
+operationId: getIngredients
+summary: Get all ingredients
+description: Retrieve a list of all available ingredients.
+tags:
+  - Ingredients
+security: []
+responses:
+  '200':
+    description: List of ingredients
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../components/schemas/Ingredient.yaml'
+  '500':
+    description: Server error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Internal server error
