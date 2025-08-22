@@ -1,4 +1,7 @@
 type: object
+required:
+  - _id
+  - name
 properties:
   _id:
     description: "Category's unique identifier"
@@ -7,23 +10,4 @@ properties:
   name:
     description: 'Name of the category'
     type: string
-    example: 'Main Course'
-  title:
-    type: string
-    example: Breakfast
-  slug:
-    type: string
-    example: breakfast
-  createdAt:
-    type: string
-    format: date-time
-    example: 2025-08-20T10:11:12.000Z
-  updatedAt:
-    type: string
-    format: date-time
-    example: 2025-08-20T10:11:12.000Z
-required:
-  - _id
-  - name
-  - title
-  - slug
+    example: 'Soup'
