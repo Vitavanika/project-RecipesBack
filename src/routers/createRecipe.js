@@ -1,17 +1,17 @@
 import { Router } from 'express';
-import ctrlWrapper from '../utils/ctrlWrapper.js';
-import { parseFormDataArrays } from "../middlewares/parseFormDataArray.js";
 import { createRecipeController } from '../controllers/createRecipe.js';
-import { upload } from '../middlewares/multer.js';
-import { createRecipeSchema } from '../validation/recipe.js';
+import ctrlWrapper from '../utils/ctrlWrapper.js';
 import validateBody from '../utils/validateBody.js';
-
+import { parseFormDataArrays } from "../middlewares/parseFormDataArray.js";
+import { upload } from '../middlewares/multer.js';
+import { authenticate } from '../middlewares/authenticate.js';
+import { createRecipeSchema } from '../validation/recipe.js';
 
 
 const createRecipeRouter = Router();
 
 
-createRecipeRouter.post("/", upload.single('photo'), parseFormDataArrays, validateBody(createRecipeSchema), ctrlWrapper(createRecipeController)); 
+createRecipeRouter.post("/", authenticate, upload.single('photo'), parseFormDataArrays, validateBody(createRecipeSchema), ctrlWrapper(createRecipeController)); 
 
 
 export default createRecipeRouter;
