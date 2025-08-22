@@ -1,9 +1,17 @@
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+
 export const getCurrentUser = async (req, res) => {
   const { user } = req;
   
   res.json({
-    status: 200,
-    message: 'Successfully retrieved current user information',
-    data: user
+    status: 'success',
+    code: 200,
+    data: {
+      user,
+    },
   });
+};
+
+export default {
+  getCurrentUser: ctrlWrapper(getCurrentUser),
 };

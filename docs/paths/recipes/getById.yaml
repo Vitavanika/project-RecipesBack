@@ -1,29 +1,37 @@
 tags:
   - Recipes
-summary: Get recipe by ID
-description: Retrieve a specific recipe by its unique identifier
-operationId: getRecipeById
+summary: Get recipe by id
+operationId: getRecipe
+description: 'Get recipe by id'
+security:
+  - bearerAuth: []
 parameters:
-  - name: id
-    in: path
+  - in: path
+    name: id
     required: true
-    description: Recipe ID
     schema:
       type: string
-      pattern: '^[0-9a-fA-F]{24}$'
+      example: '6462a8f74c3d0ddd28897fcd'
 responses:
   '200':
-    description: Recipe found successfully
+    description: 'Get recipe by id'
     content:
       application/json:
-        schema:
+       schema:
           type: object
+          required:
+            - status
+            - message
+            - data
           properties:
-            recipe:
-              $ref: '../components/schemas/Recipe.yaml'
-  '400':
-    $ref: '../components/responses/400.yaml'
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found recipe with id 6462a8f74c3d0ddd28897fcd!
+            data:
+              type: object
+              $ref: '../../components/schemas/Recipe.yaml'
   '404':
-    $ref: '../components/responses/404.yaml'
-  '500':
-    $ref: '../components/responses/500.yaml'
+    $ref: '../../components/responses/404.yaml'

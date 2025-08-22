@@ -27,25 +27,25 @@ paths:
   /api/categories:
     get:
       $ref: './paths/categories/get.yaml'
-  /auth/register:
+  /api/auth/register:
     post:
       $ref: './paths/auth/register.yaml'
-  /auth/login:
+  /api/auth/login:
     post:
       $ref: './paths/auth/login.yaml'
-  /auth/logout:
+  /api/auth/logout:
     post:
       $ref: './paths/auth/logout.yaml'
-  /auth/refresh:
+  /api/auth/refresh:
     post:
       $ref: './paths/auth/refresh.yaml'
-  /users/me:
+  /api/users:
     get:
-      $ref: './paths/users/getMe.yaml'
+      $ref: './paths/users/get.yaml'
 
 components:
   securitySchemes:
-    bearerAuth:
+    BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT

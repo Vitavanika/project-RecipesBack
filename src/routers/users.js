@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { getCurrentUser } from '../controllers/users.js';
 import { authenticate } from '../middlewares/authenticate.js';
-import ctrlWrapper from '../utils/ctrlWrapper.js';
+import usersController from '../controllers/users.js';
 
-const usersRouter = Router();
+const router = Router();
 
-usersRouter.get('/me', authenticate, ctrlWrapper(getCurrentUser));
+// GET /api/users - отримання інформації про поточного користувача
+router.get('/', authenticate, usersController.getCurrentUser);
 
-export default usersRouter;
+export default router;
