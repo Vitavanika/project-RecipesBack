@@ -8,6 +8,9 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../docs/swagger.json' with { type: 'json' };
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import categoriesRouter from './routers/categories.js';
+
+
 export const setupServer = () => {
   const app = express();
 
@@ -23,6 +26,7 @@ export const setupServer = () => {
   app.use(express.json());
 
   app.use('/api/ingredients', ingredientsRouter);
+  app.use('/api/categories', categoriesRouter);
   app.use('/api', router);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

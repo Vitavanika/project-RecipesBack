@@ -2,9 +2,9 @@ import { Router } from 'express';
 import { authenticate } from '../middlewares/authenticate.js';
 import { getCurrentUser } from '../controllers/users.js';
 
-const router = Router();
+const usersRouter = Router();
 
 // Приватний ендпоінт для отримання інформації про поточного користувача
-router.get('/', authenticate, getCurrentUser);
+usersRouter.get('/', authenticate, getCurrentUser);
 
-export default router;
+export default usersRouter;
