@@ -30,7 +30,9 @@ export const getFilteredRecipes = async ({
 
     if (searchPhrase) {
         filter.$or = [
-            { title: { $regex: searchPhrase, $options: 'i' } },
+
+            { name: { $regex: searchPhrase, $options: 'i' } },
+
             { description: { $regex: searchPhrase, $options: 'i' } },
         ];
     }

@@ -29,4 +29,3 @@ export const getOwnRecipes = async ({
         hasNextPage: page < totalPages,
         ...(recipes.length === 0 && { message: 'No own recipes found' })
     }
-}

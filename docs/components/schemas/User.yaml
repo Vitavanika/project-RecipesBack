@@ -27,5 +27,6 @@ properties:
     description: "List of IDs of the user's favourite recipes"
     type: array
     items:
+      description: 'ID of a favourite recipe'
       type: string
       example: '65e4decdd286b30065d54af9'

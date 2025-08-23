@@ -11,7 +11,9 @@ export const getOwnRecipes = async (req, res) => {
     res.status(200).json({
         message: 'Own recipes retrieved successfully',
         data: {
+
             ...ownRecipes,
+
         },
     });
 }
