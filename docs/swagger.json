@@ -38,21 +38,108 @@
     }
   ],
   "paths": {
-    "/api/categories": {
+    "/api/recipes": {
       "get": {
         "tags": [
-          "Categories"
+          "Recipes"
         ],
-        "summary": "Get a list of recipe categories",
-        "description": "Public endpoint. Returns an array of categories.",
-        "operationId": "getCategories",
+        "summary": "Get my recipes (private)",
+        "operationId": "getOwnRecipes",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "title",
+                "createdAt",
+                "updatedAt",
+                "isFavorite"
+              ],
+              "default": "createdAt"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortOrder",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "desc"
+            }
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Full-text or regex search by title/description"
+          },
+          {
+            "in": "query",
+            "name": "tags",
+            "schema": {
+              "type": "string"
+            },
+            "description": "CSV list; returns recipes that include all tags"
+          },
+          {
+            "in": "query",
+            "name": "isFavorite",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fields",
+            "schema": {
+              "type": "string"
+            },
+            "description": "CSV projection (e.g. title,description,tags)"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -60,7 +147,213 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found categories!"
+                      "example": "My recipes fetched"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "recipes": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Recipe"
+                          }
+                        },
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "perPage": {
+                          "type": "integer",
+                          "example": 10
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 37
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "example": 4
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "My recipes not found",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Create a new recipe",
+        "operationId": "createRecipe",
+        "description": "Create a new recipe (private)",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Potato soup"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Delicious potato soup"
+                  },
+                  "ingredients": {
+                    "type": "string",
+                    "example": "1 potato, 1 onion, 1 carrot"
+                  },
+                  "instructions": {
+                    "type": "string",
+                    "example": "1. Peel and chop the potatoes. 2. Boil the potatoes until tender. 3. Mash the potatoes and add seasoning to taste."
+                  },
+                  "categoryId": {
+                    "type": "string",
+                    "example": "64f1a2c3e4b5d6f7a8b9c0d1"
+                  },
+                  "cookingTime": {
+                    "type": "number",
+                    "example": 45
+                  },
+                  "foodEnergy": {
+                    "type": "number",
+                    "example": 320
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recipe created successfully",
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Recipe created successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "recipe": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/Recipe"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/api/ingredient": {
+      "get": {
+        "tags": [
+          "Ingredients"
+        ],
+        "summary": "Get all ingredients",
+        "operationId": "getAllIngredients",
+        "description": "Retrieve a list of all available ingredients.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "List of ingredients",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ingredient"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "description": "Ingredients not found",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get all categories",
+        "operationId": "getAllCategories",
+        "description": "Public endpoint. Returns an array of categories.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "List of categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully retrieved categories!"
                     },
                     "data": {
                       "type": "array",
@@ -73,8 +366,15 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "description": "Categories not found",
+            "$ref": "#/components/responses/404"
+          },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -349,52 +649,56 @@
     },
     "/api/users": {
       "get": {
-        "get": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Get current user information",
-          "description": "Retrieve information about the currently authenticated user",
-          "security": [
-            {
-              "BearerAuth": []
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "User information retrieved successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "success"
-                      },
-                      "code": {
-                        "type": "integer",
-                        "example": 200
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "user": {
-                            "$ref": "../components/schemas/User.yaml"
-                          }
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get current user information",
+        "description": "Retrieve information about the currently authenticated user",
+        "operationId": "getCurrentUser",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User information retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully retrieved user information!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/User"
                         }
                       }
                     }
                   }
                 }
               }
-            },
-            "401": {
-              "$ref": "../components/responses/401.yaml"
-            },
-            "500": {
-              "$ref": "../components/responses/500.yaml"
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -694,6 +998,30 @@
           }
         }
       },
+      "404": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Resource not found"
+                }
+              }
+            }
+          }
+        }
+      },
       "409": {
         "description": "Conflict Error",
         "content": {
@@ -712,7 +1040,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "ConflictError"
+                  "example": "ConflictError."
                 },
                 "data": {
                   "type": "object",

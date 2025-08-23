@@ -1,26 +1,26 @@
 tags:
-  - Recipes
+- Recipes
 summary: Get recipe by id
 operationId: getRecipe
-description: 'Get recipe by id'
+description: "Get recipe by id"
 parameters:
-  - in: path
-    name: id
-    required: true
-    schema:
-      type: string
-      example: '6462a8f74c3d0ddd28897fcd'
+- in: path
+  name: id
+  required: true
+  schema:
+    type: string
+    example: "6462a8f74c3d0ddd28897fcd"
 responses:
-  '200':
-    description: 'Recipe successfully found'
+  "200":
+    description: "Recipe successfully found"
     content:
       application/json:
-       schema:
+        schema:
           type: object
           required:
-            - status
-            - message
-            - data
+          - status
+          - message
+          - data
           properties:
             status:
               type: integer
@@ -30,6 +30,6 @@ responses:
               example: Successfully found recipe with id 6462a8f74c3d0ddd28897fcd!
             data:
               type: object
-              $ref: '../../components/schemas/Recipe.yaml'
-  '404':
-    $ref: '../../components/responses/404.yaml'
+              $ref: "../../components/schemas/Recipe.yaml"
+  "404":
+    $ref: "../../components/responses/404.yaml"

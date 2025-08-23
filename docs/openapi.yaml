@@ -8,43 +8,48 @@ info:
   description: API for managing and sharing culinary recipes.
 
 tags:
-  - name: Auth
-    description: User authentication endpoints
-  - name: Users
-    description: User-related endpoints
-  - name: Categories
-    description: Recipe categories endpoints
-  - name: Ingredients
-    description: Recipe ingredients endpoints
-  - name: Recipes
-    description: Endpoints for managing recipes
+- name: Auth
+  description: User authentication endpoints
+- name: Users
+  description: User-related endpoints
+- name: Categories
+  description: Recipe categories endpoints
+- name: Ingredients
+  description: Recipe ingredients endpoints
+- name: Recipes
+  description: Endpoints for managing recipes
 
 servers:
-  - url: http://127.0.0.1:3000
-    description: Development server
+- url: http://127.0.0.1:3000
+  description: Development server
 
 paths:
+  /api/recipes:
+    get:
+      $ref: ./paths/recipes/getOwn.yaml
+    post:
+      $ref: ./paths/recipes/post.yaml
   /api/ingredient:
     get:
-      $ref: './paths/ingredients/get.yaml'
+      $ref: ./paths/ingredients/get.yaml
   /api/categories:
     get:
-      $ref: './paths/categories/get.yaml'
+      $ref: ./paths/categories/get.yaml
   /auth/register:
     post:
-      $ref: './paths/auth/register.yaml'
+      $ref: ./paths/auth/register.yaml
   /auth/login:
     post:
-      $ref: './paths/auth/login.yaml'
+      $ref: ./paths/auth/login.yaml
   /auth/logout:
     post:
-      $ref: './paths/auth/logout.yaml'
+      $ref: ./paths/auth/logout.yaml
   /auth/refresh:
     post:
-      $ref: './paths/auth/refresh.yaml'
+      $ref: ./paths/auth/refresh.yaml
   /api/users:
     get:
-      $ref: './paths/users/get.yaml'
+      $ref: ./paths/users/get.yaml
 
 components:
   securitySchemes:
@@ -56,12 +61,12 @@ components:
 
   schemas:
     Recipe:
-      $ref: './components/schemas/Recipe.yaml'
+      $ref: ./components/schemas/Recipe.yaml
     User:
-      $ref: './components/schemas/User.yaml'
+      $ref: ./components/schemas/User.yaml
     Ingredient:
-      $ref: './components/schemas/Ingredient.yaml'
+      $ref: ./components/schemas/Ingredient.yaml
     Category:
-      $ref: './components/schemas/Category.yaml'
+      $ref: ./components/schemas/Category.yaml
     Session:
-      $ref: './components/schemas/Session.yaml'
+      $ref: ./components/schemas/Session.yaml

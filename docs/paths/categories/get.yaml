@@ -1,25 +1,35 @@
 tags:
-  - Categories
-summary: Get a list of recipe categories
+- Categories
+summary: Get all categories
+operationId: getAllCategories
 description: Public endpoint. Returns an array of categories.
-operationId: getCategories
+security: []
 responses:
-  '200':
-    description: Successful response
+  "200":
+    description: List of categories
     content:
       application/json:
         schema:
           type: object
+          required:
+          - status
+          - message
+          - data
           properties:
             status:
               type: integer
               example: 200
             message:
               type: string
-              example: Successfully found categories!
+              example: Successfully retrieved categories!
             data:
               type: array
               items:
-                $ref: '../../components/schemas/Category.yaml'
-  '500':
-    description: Internal server error
+                $ref: "../../components/schemas/Category.yaml"
+  "400":
+    $ref: "../../components/responses/400.yaml"
+  "404":
+    description: Categories not found
+    $ref: "../../components/responses/404.yaml"
+  "500":
+    $ref: "../../components/responses/500.yaml"

@@ -1,77 +1,45 @@
 tags:
   - Recipes
-summary: Create recipe
+summary: Create a new recipe
 operationId: createRecipe
-description: Create recipe
-security:
-  - bearerAuth: []
-requestBody: 
+description: Create a new recipe (private)
+security: []
+requestBody:
   required: true
   content:
-    required:
-      - name
-      - category
-      - instructions
-      - ingredients
-      - cookingTime
-    properties:
-      name:
-        type: string
-        description: Recipe title
-        example: "Scrambled Eggs"
-       name:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
             type: string
-            maxLength: 64
-            description: Recipe name
-            example: "Scrambled Eggs"
-        description:
-          type: string
-          maxLength: 200
-          description: Short description of the recipe
-          example: "Easy scrambled eggs for breakfast."
-        ingredients:
-          type: array
-          description: List of ingredients with quantities
-          items:
-            type: object
-            required:
-              - name
-              - quantity
-            properties:
-              name:
-                type: string
-                description: Ingredient name
-                example: "Eggs"
-              quantity:
-                type: string
-                description: Ingredient quantity
-                example: "2 large"
-        instructions:
-          type: string
-          maxLength: 1200
-          description: Step-by-step cooking instructions
-          example: "Crack eggs into a bowl. Whisk. Heat a pan with butter. Cook while stirring."
-        category:
-          type: string
-          description: Recipe category name
-          example: "Breakfast"
-        cookingTime:
-          type: string
-          description: Cooking time in minutes
-          example: "15"
-        foodEnergy:
-          type: number
-          description: Total calories
-          example: 450
-        photo:
-          type: string
-          format: binary
-          description: Optional recipe image
+            example: Potato soup
+          photo:
+            type: string
+            format: binary
+          description:
+            type: string
+            example: Delicious potato soup
+          ingredients:
+            type: string
+            example: 1 potato, 1 onion, 1 carrot
+          instructions:
+            type: string
+            example: 1. Peel and chop the potatoes. 2. Boil the potatoes until tender. 3. Mash the potatoes and add seasoning to taste.
+          categoryId:
+            type: string
+            example: 64f1a2c3e4b5d6f7a8b9c0d1
+          cookingTime:
+            type: number
+            example: 45
+          foodEnergy:
+            type: number
+            example: 320
 responses:
-  '201':
-    description: Successfully created recipe
+  201:
+    description: Recipe created successfully
     content:
-      application/json:
+      multipart/form-data:
         schema:
           type: object
           required:
@@ -84,12 +52,14 @@ responses:
               example: 201
             message:
               type: string
-              example: "Successfully created recipe!"
+              example: Recipe created successfully
             data:
-              $ref: ../../components/schemas/recipe.yaml
-  '400':
+              type: object
+              properties:
+                recipe:
+                  type: object
+                  $ref: ../../components/schemas/Recipe.yaml
+  400:
     $ref: ../../components/responses/400.yaml
-  '401':
+  401:
     $ref: ../../components/responses/401.yaml
-  '500':
-    $ref: ../../components/responses/500.yaml

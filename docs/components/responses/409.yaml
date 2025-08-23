@@ -13,10 +13,10 @@ content:
           example: 409
         message:
           type: string
-          example: ConflictError
+          example: ConflictError.
         data:
           type: object
           properties:
-            message: 
+            message:
               type: string
               example: "Email in use"
