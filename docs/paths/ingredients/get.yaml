@@ -1,8 +1,8 @@
-operationId: getIngredients
-summary: Get all ingredients
-description: Retrieve a list of all available ingredients.
 tags:
   - Ingredients
+summary: Get all ingredients
+operationId: getAllIngredients
+description: Retrieve a list of all available ingredients.
 security: []
 responses:
   '200':
@@ -15,5 +15,8 @@ responses:
             $ref: '../../components/schemas/Ingredient.yaml'
   '400':
     $ref: ../../components/responses/400.yaml
+  '404':
+    description: Ingredients not found
+    $ref: '../../components/responses/404.yaml'
   '500':
     $ref: '../../components/responses/500.yaml'

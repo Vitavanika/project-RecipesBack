@@ -4,8 +4,8 @@ content:
     schema:
       type: object
       required:
-        - status
-        - message
+      - status
+      - message
       properties:
         status:
           type: integer

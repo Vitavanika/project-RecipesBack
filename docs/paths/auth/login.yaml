@@ -17,13 +17,13 @@ requestBody:
           email:
             description: "User's email"
             type: string
-            example: "test@test.ua"
+            example: 'test@test.ua'
           password:
             description: "User's password"
             type: string
-            example: "12345678"
+            example: '12345678'
 responses:
-  "200":
+  '200':
     description: User logged in
     content:
       application/json:
@@ -45,10 +45,10 @@ responses:
               properties:
                 accessToken:
                   type: string
-                  example: "cqPzZEQl8Oyt0/tjTMqQiru5Te+jAHkTB2hm/5Fo"
-  "400":
+                  example: 'cqPzZEQl8Oyt0/tjTMqQiru5Te+jAHkTB2hm/5Fo'
+  '400':
     $ref: ../../components/responses/400.yaml
-  "401":
+  '401':
     $ref: ../../components/responses/401.yaml
-  "500":
+  '500':
     $ref: ../../components/responses/500.yaml
