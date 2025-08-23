@@ -13,13 +13,7 @@ responses:
           type: array
           items:
             $ref: '../../components/schemas/Ingredient.yaml'
+  '400':
+    $ref: ../../components/responses/400.yaml
   '500':
-    description: Server error
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            message:
-              type: string
-              example: Internal server error
+    $ref: '../../components/responses/500.yaml'
