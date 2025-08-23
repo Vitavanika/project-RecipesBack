@@ -24,6 +24,9 @@ servers:
     description: Development server
 
 paths:
+  /api/ingredient:
+    get:
+      $ref: './paths/ingredients/get.yaml'
   /api/categories:
     get:
       $ref: './paths/categories/get.yaml'
