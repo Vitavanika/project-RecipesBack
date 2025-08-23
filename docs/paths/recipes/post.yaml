@@ -1,0 +1,95 @@
+tags:
+  - Recipes
+summary: Create recipe
+operationId: createRecipe
+description: Create recipe
+security:
+  - bearerAuth: []
+requestBody: 
+  required: true
+  content:
+    required:
+      - name
+      - category
+      - instructions
+      - ingredients
+      - cookingTime
+    properties:
+      name:
+        type: string
+        description: Recipe title
+        example: "Scrambled Eggs"
+       name:
+            type: string
+            maxLength: 64
+            description: Recipe name
+            example: "Scrambled Eggs"
+        description:
+          type: string
+          maxLength: 200
+          description: Short description of the recipe
+          example: "Easy scrambled eggs for breakfast."
+        ingredients:
+          type: array
+          description: List of ingredients with quantities
+          items:
+            type: object
+            required:
+              - name
+              - quantity
+            properties:
+              name:
+                type: string
+                description: Ingredient name
+                example: "Eggs"
+              quantity:
+                type: string
+                description: Ingredient quantity
+                example: "2 large"
+        instructions:
+          type: string
+          maxLength: 1200
+          description: Step-by-step cooking instructions
+          example: "Crack eggs into a bowl. Whisk. Heat a pan with butter. Cook while stirring."
+        category:
+          type: string
+          description: Recipe category name
+          example: "Breakfast"
+        cookingTime:
+          type: string
+          description: Cooking time in minutes
+          example: "15"
+        foodEnergy:
+          type: number
+          description: Total calories
+          example: 450
+        photo:
+          type: string
+          format: binary
+          description: Optional recipe image
+responses:
+  '201':
+    description: Successfully created recipe
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: "Successfully created recipe!"
+            data:
+              $ref: ../../components/schemas/recipe.yaml
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml
