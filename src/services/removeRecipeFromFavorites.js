@@ -1,7 +1,7 @@
-import User from "../models/user.js";
+import { UsersCollection } from "../models/user.js";
 
 export const removeRecipeFromFavorites = async ({ userId, recipeId }) => {
-  const user = await User.findById(userId);
+  const user = await UsersCollection.findById(userId);
 
   if (!user) throw new Error("User not found");
 
