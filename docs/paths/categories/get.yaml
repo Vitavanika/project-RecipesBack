@@ -3,6 +3,21 @@ tags:
 summary: Get a list of recipe categories
 description: Public endpoint. Returns an array of categories.
 operationId: getCategories
+parameters:
+  - name: page
+    in: query
+    description: Page number for pagination
+    required: false
+    schema:
+      type: integer
+      example: 1
+  - name: limit
+    in: query
+    description: Number of items per page
+    required: false
+    schema:
+      type: integer
+      example: 10
 responses:
   '200':
     description: Successful response
@@ -21,5 +36,18 @@ responses:
               type: array
               items:
                 $ref: '../../components/schemas/Category.yaml'
+  '404':
+    description: Categories not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Categories not found
   '500':
     description: Internal server error
