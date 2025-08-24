@@ -10,7 +10,7 @@ parameters:
     schema: { type: integer, minimum: 1, default: 1 }
   - in: query
     name: perPage
-    schema: { type: integer, minimum: 1, maximum: 100, default: 10 }
+    schema: { type: integer, minimum: 1, maximum: 100, default: 12 }
   - in: query
     name: sortBy
     schema:
@@ -60,7 +60,7 @@ responses:
                   items:
                     $ref: '../../components/schemas/Recipe.yaml'
                 page: { type: integer, example: 1 }
-                perPage: { type: integer, example: 10 }
+                perPage: { type: integer, example: 12 }
                 total: { type: integer, example: 37 }
                 totalPages: { type: integer, example: 4 }
   '401':

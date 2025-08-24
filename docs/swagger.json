@@ -11,6 +11,10 @@
   },
   "servers": [
     {
+      "url": "https://project-recipesback.onrender.com",
+      "description": "Production server"
+    },
+    {
       "url": "http://127.0.0.1:3000",
       "description": "Development server"
     }
@@ -43,6 +47,159 @@
         "tags": [
           "Recipes"
         ],
+        "summary": "Get all recipes",
+        "description": "Returns a paginated list of all recipes.",
+        "operationId": "getRecipes",
+        "security": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "description": "Page number"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 12
+            },
+            "description": "Number of items per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipes retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Recipes retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "hits": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Recipe"
+                          }
+                        },
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "perPage": {
+                          "type": "integer",
+                          "example": 12
+                        },
+                        "totalItems": {
+                          "type": "integer",
+                          "example": 100
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "example": 9
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNextPage": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - authentication required"
+          },
+          "500": {
+            "description": "Error retrieving recipes"
+          }
+        }
+      }
+    },
+    "/api/recipes/{id}": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get recipe by id",
+        "operationId": "getRecipe",
+        "description": "Get recipe by id",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6462a8f74c3d0ddd28897fcd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe successfully found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found recipe with id 6462a8f74c3d0ddd28897fcd!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Recipe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/api/recipes/own": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Get my recipes (private)",
         "operationId": "getOwnRecipes",
         "security": [
@@ -67,7 +224,7 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 100,
-              "default": 10
+              "default": 12
             }
           },
           {
@@ -164,7 +321,7 @@
                         },
                         "perPage": {
                           "type": "integer",
-                          "example": 10
+                          "example": 12
                         },
                         "total": {
                           "type": "integer",
@@ -192,86 +349,92 @@
             "$ref": "#/components/responses/500"
           }
         }
-      },
-      "post": {
+      }
+    },
+    "/api/recipes/favorites": {
+      "get": {
         "tags": [
           "Recipes"
         ],
-        "summary": "Create a new recipe",
-        "operationId": "createRecipe",
-        "description": "Create a new recipe (private)",
-        "security": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "Potato soup"
-                  },
-                  "photo": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "Delicious potato soup"
-                  },
-                  "ingredients": {
-                    "type": "string",
-                    "example": "1 potato, 1 onion, 1 carrot"
-                  },
-                  "instructions": {
-                    "type": "string",
-                    "example": "1. Peel and chop the potatoes. 2. Boil the potatoes until tender. 3. Mash the potatoes and add seasoning to taste."
-                  },
-                  "categoryId": {
-                    "type": "string",
-                    "example": "64f1a2c3e4b5d6f7a8b9c0d1"
-                  },
-                  "cookingTime": {
-                    "type": "number",
-                    "example": 45
-                  },
-                  "foodEnergy": {
-                    "type": "number",
-                    "example": 320
-                  }
-                }
-              }
-            }
+        "summary": "Get user's favorite recipes",
+        "description": "Returns a paginated list of favorite recipes for the authenticated user.",
+        "operationId": "getFavoritesRecipes",
+        "security": [
+          {
+            "BearerAuth": []
           }
-        },
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "description": "Page number"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 12
+            },
+            "description": "Number of items per page"
+          }
+        ],
         "responses": {
-          "201": {
-            "description": "Recipe created successfully",
+          "200": {
+            "description": "Favorites recipes retrieved successfully",
             "content": {
-              "multipart/form-data": {
+              "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
                   "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 201
-                    },
                     "message": {
                       "type": "string",
-                      "example": "Recipe created successfully"
+                      "example": "Favorites recipes retrieved successfully"
                     },
                     "data": {
                       "type": "object",
                       "properties": {
-                        "recipe": {
-                          "type": "object",
-                          "$ref": "#/components/schemas/Recipe"
+                        "hits": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Recipe"
+                          }
+                        },
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "perPage": {
+                          "type": "integer",
+                          "example": 12
+                        },
+                        "totalItems": {
+                          "type": "integer",
+                          "example": 35
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "example": 3
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNextPage": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "No favorites recipes found"
                         }
                       }
                     }
@@ -281,10 +444,13 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/400"
+            "description": "Invalid pagination parameters"
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Error retrieving favorite recipes"
           }
         }
       }
