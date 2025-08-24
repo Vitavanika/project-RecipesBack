@@ -26,7 +26,7 @@ export const setupServer = () => {
 
   app.use('/auth', authRouter);
   app.use('/recipes', recipesRouter);
-  app.use('/categories', categoriesRouter);
+  app.use('/api/categories', categoriesRouter);
 
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
