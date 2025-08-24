@@ -1,0 +1,65 @@
+tags:
+  - Recipes
+summary: Create a new recipe
+operationId: createRecipe
+description: Create a new recipe (private)
+security: []
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            example: Potato soup
+          photo:
+            type: string
+            format: binary
+          description:
+            type: string
+            example: Delicious potato soup
+          ingredients:
+            type: string
+            example: 1 potato, 1 onion, 1 carrot
+          instructions:
+            type: string
+            example: 1. Peel and chop the potatoes. 2. Boil the potatoes until tender. 3. Mash the potatoes and add seasoning to taste.
+          categoryId:
+            type: string
+            example: 64f1a2c3e4b5d6f7a8b9c0d1
+          cookingTime:
+            type: number
+            example: 45
+          foodEnergy:
+            type: number
+            example: 320
+responses:
+  201:
+    description: Recipe created successfully
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Recipe created successfully
+            data:
+              type: object
+              properties:
+                recipe:
+                  type: object
+                  $ref: ../../components/schemas/Recipe.yaml
+  400:
+    $ref: ../../components/responses/400.yaml
+  401:
+    $ref: ../../components/responses/401.yaml

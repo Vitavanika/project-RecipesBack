@@ -1,4 +1,4 @@
-import { addRecipeToFavorites as addRecipeToFavoritesService } from "../services/addRecipeToFavorites.js";
+import { addRecipeToFavorites as addRecipeToFavoritesService } from "../services/addFavoritesRecipes.js";
 
 export const addRecipeToFavorites = async (req, res) => {
   const userId = req.user._id;

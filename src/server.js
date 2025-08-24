@@ -2,13 +2,18 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
 import cookieParser from 'cookie-parser';
+
 import authRouter from './routers/auth.js';
 import recipesRouter from './routers/recipes.js';
+import ingredientsRouter from './routers/ingredients.js';
 import categoriesRouter from './routers/categories.js';
+
+import router from './routers/index.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../docs/swagger.json' with { type: 'json' };
-import { errorHandler } from './middlewares/errorHandler.js';
+
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 export const setupServer = () => {
   const app = express();
@@ -17,24 +22,22 @@ export const setupServer = () => {
   app.use(cookieParser());
   app.use(
     pino({
-      transport: {
-        target: 'pino-pretty',
-      },
+      transport: { target: 'pino-pretty' },
     }),
   );
   app.use(express.json());
 
   app.use('/auth', authRouter);
   app.use('/recipes', recipesRouter);
+  app.use('/api/ingredients', ingredientsRouter);
   app.use('/api/categories', categoriesRouter);
 
+  app.use('/', router);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   app.use(notFoundHandler);
   app.use(errorHandler);
 
   const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
+  app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 };

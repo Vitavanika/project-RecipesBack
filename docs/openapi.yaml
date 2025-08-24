@@ -27,6 +27,7 @@ paths:
   /api/categories:
     get:
       $ref: './paths/categories/get.yaml'
+
   /auth/register:
     post:
       $ref: './paths/auth/register.yaml'
@@ -39,6 +40,10 @@ paths:
   /auth/refresh:
     post:
       $ref: './paths/auth/refresh.yaml'
+
+  /users:
+    get:
+      $ref: './paths/users/get.yaml'
 
 components:
   securitySchemes:
