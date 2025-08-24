@@ -8,20 +8,20 @@ info:
   description: API for managing and sharing culinary recipes.
 
 tags:
-- name: Auth
-  description: User authentication endpoints
-- name: Users
-  description: User-related endpoints
-- name: Categories
-  description: Recipe categories endpoints
-- name: Ingredients
-  description: Recipe ingredients endpoints
-- name: Recipes
-  description: Endpoints for managing recipes
+  - name: Auth
+    description: User authentication endpoints
+  - name: Users
+    description: User-related endpoints
+  - name: Categories
+    description: Recipe categories endpoints
+  - name: Ingredients
+    description: Recipe ingredients endpoints
+  - name: Recipes
+    description: Endpoints for managing recipes
 
 servers:
-- url: http://127.0.0.1:3000
-  description: Development server
+  - url: http://127.0.0.1:3000
+    description: Development server
 
 paths:
   /api/recipes:
@@ -29,6 +29,13 @@ paths:
       $ref: ./paths/recipes/getOwn.yaml
     post:
       $ref: ./paths/recipes/post.yaml
+  /api/recipes/favorite:
+    get:
+      $ref: ./paths/recipes/getFavorite.yaml
+    post:
+      $ref: ./paths/recipes/addFavorite.yaml
+    delete:
+      $ref: ./paths/recipes/removeFavorite.yaml
   /api/ingredient:
     get:
       $ref: ./paths/ingredients/get.yaml
