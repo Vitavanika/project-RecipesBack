@@ -28,7 +28,7 @@ servers:
 paths:
   /api/recipes:
     get:
-      $ref: ./paths/recipes/getOwn.yaml
+      $ref: ./paths/recipes/get.yaml
     post:
       $ref: ./paths/recipes/post.yaml
   /api/recipes/{id}:
