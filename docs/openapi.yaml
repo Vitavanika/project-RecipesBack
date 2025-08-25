@@ -22,7 +22,7 @@ tags:
 servers:
   - url: http://127.0.0.1:3000
     description: Development server
-  - url: https://recipes-api.onrender.com
+  - url: https://project-recipesback.onrender.com
     description: Production server
 
 paths:
@@ -34,6 +34,9 @@ paths:
   /api/recipes/{id}:
     get:
       $ref: ./paths/recipes/getById.yaml
+  /api/recipes/own:
+    get:
+      $ref: ./paths/recipes/getOwn.yaml
   /api/recipes/favorite:
     get:
       $ref: ./paths/recipes/getFavorite.yaml
