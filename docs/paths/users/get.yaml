@@ -14,15 +14,15 @@ responses:
           type: object
           required:
             - status
-            - message
+            - code
             - data
           properties:
             status:
+              type: string
+              example: success
+            code:
               type: integer
               example: 200
-            message:
-              type: string
-              example: Successfully retrieved user information!
             data:
               type: object
               properties:
