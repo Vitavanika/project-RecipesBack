@@ -2,16 +2,17 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
 import cookieParser from 'cookie-parser';
-import router from './routers/index.js';
 import ingredientsRouter from './routers/ingredients.js';
+import categoriesRouter from './routers/categories.js';
+import recipesRouter from './routers/recipes.js';
+import authRouter from './routers/auth.js';
+import usersRouter from './routers/users.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../docs/swagger.json' with { type: 'json' };
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import categoriesRouter from './routers/categories.js';
 import { welcomeMessage } from './controllers/welcome.js';
 import ctrlWrapper from './utils/ctrlWrapper.js';
-
 
 export const setupServer = () => {
   const app = express();
@@ -29,7 +30,10 @@ export const setupServer = () => {
 
   app.use('/api/ingredients', ingredientsRouter);
   app.use('/api/categories', categoriesRouter);
-  app.use('/api', router);
+  app.use('/api/recipes', recipesRouter);
+  //app.use('/api', router);
+  app.use('api/auth', authRouter);
+  app.use('api/users', usersRouter);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.get('/', ctrlWrapper(welcomeMessage));
   app.use(notFoundHandler);

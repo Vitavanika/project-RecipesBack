@@ -13,6 +13,10 @@
     {
       "url": "http://127.0.0.1:3000",
       "description": "Development server"
+    },
+    {
+      "url": "https://recipes-api.onrender.com",
+      "description": "Production server"
     }
   ],
   "tags": [
@@ -287,111 +291,154 @@
             "$ref": "#/components/responses/401"
           }
         }
-      } 
-  },
- "/api/recipes/favorite": {
-    "get": {
-    "tags": [
-        "Favorites"
-      ],
-      "summary": "Get user's favorite recipes",
-      "operationId": "getFavoriteRecipes",
-      "description": "Retrieves all recipes from the user favorites list",
-      "security": [
-        {
-          "BearerAuth": []
+      }
+    },
+    "/api/recipes/{id}": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get recipe by id",
+        "operationId": "getRecipe",
+        "description": "Get recipe by id",
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6462a8f74c3d0ddd28897fcd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe successfully found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found recipe with id 6462a8f74c3d0ddd28897fcd!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Recipe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
         }
-      ],
-      "parameters": [
-        {
-          "in": "query",
-          "name": "page",
-          "required": false,
-          "schema": {
-            "type": "integer",
-            "minimum": 1,
-            "default": 1
+      }
+    },
+    "/api/recipes/favorite": {
+      "get": {
+        "tags": [
+          "Favorites"
+        ],
+        "summary": "Get user's favorite recipes",
+        "operationId": "getFavoriteRecipes",
+        "description": "Retrieves all recipes from the user favorites list",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "example": 1,
+            "description": "Page number for pagination"
           },
-          "example": 1,
-          "description": "Page number for pagination"
-        },
-        {
-          "in": "query",
-          "name": "limit",
-          "required": false,
-          "schema": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 100,
-            "default": 10
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "example": 10,
+            "description": "Number of recipes per page"
           },
-          "example": 10,
-          "description": "Number of recipes per page"
-        },
-        {
-          "in": "query",
-          "name": "sortBy",
-          "required": false,
-          "schema": {
-            "type": "string",
-            "enum": ["dateAdded", "recipeName", "cuisine"],
-            "default": "dateAdded"
+          {
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "dateAdded",
+                "recipeName",
+                "cuisine"
+              ],
+              "default": "dateAdded"
+            },
+            "example": "dateAdded",
+            "description": "Sort favorites by specified field"
           },
-          "example": "dateAdded",
-          "description": "Sort favorites by specified field"
-        },
-        {
-          "in": "query",
-          "name": "sortOrder",
-          "required": false,
-          "schema": {
-            "type": "string",
-            "enum": ["asc", "desc"],
-            "default": "desc"
-          },
-          "example": "desc",
-          "description": "Sort order (ascending or descending)"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved favorite recipes",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "success": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "data": {
-                    "type": "object",
-                    "properties": {
-                      "favorites": {
-                        "type": "array",
-                        "items": {
-                          "$ref": "#/components/schemas/Recipe"
-                        }
-                      },
-                      "pagination": {
-                        "type": "object",
-                        "properties": {
-                          "page": {
-                            "type": "integer",
-                            "example": 1
-                          },
-                          "limit": {
-                            "type": "integer",
-                            "example": 10
-                          },
-                          "totalPages": {
-                            "type": "integer",
-                            "example": 5
-                          },
-                          "totalItems": {
-                            "type": "integer",
-                            "example": 45
+          {
+            "in": "query",
+            "name": "sortOrder",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "desc"
+            },
+            "example": "desc",
+            "description": "Sort order (ascending or descending)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved favorite recipes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "favorites": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Recipe"
                           }
                         }
                       }
@@ -400,167 +447,125 @@
                 }
               }
             }
-          }
-        },
-        "400": {
-          "$ref": "#/components/responses/400"
-        },
-        "401": {
-          "$ref": "#/components/responses/401"
-        },
-        "500": {
-          "$ref": "#/components/responses/500"
-        }
-      }
-    },
-
-    "post": {
-      "tags": [
-        "Favorites"
-      ],
-      "summary": "Add recipe to favorites",
-      "operationId": "addRecipeToFavorites",
-      "description": "Adds a recipe to the user favorites list",
-      "security": [
-        {
-          "BearerAuth": []
-        }
-      ],
-      "requestBody": {
-        "required": true,
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "recipeId"
-              ],
-              "properties": {
-                "recipeId": {
-                  "type": "string",
-                  "example": "64f1a2b3c9e7a1d2e8b12345",
-                  "description": "ID of the recipe to add to favorites"
-                }
-              }
-            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       },
-      "responses": {
-        "200": {
-          "description": "Recipe successfully added to favorites",
+      "post": {
+        "tags": [
+          "Favorites"
+        ],
+        "summary": "Add recipe to favorites",
+        "operationId": "addRecipeToFavorites",
+        "description": "Adds a recipe to the user favorites list",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "recipeId"
+                ],
                 "properties": {
-                  "success": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "message": {
+                  "recipeId": {
                     "type": "string",
-                    "example": "Recipe added to favorites successfully"
-                  },
-                  "data": {
-                    "$ref": "#/components/schemas/Recipe"
+                    "example": "64f1a2b3c9e7a1d2e8b12345",
+                    "description": "ID of the recipe to add to favorites"
                   }
                 }
               }
             }
           }
         },
-        "400": {
-          "$ref": "#/components/responses/400"
-        },
-        "401": {
-          "$ref": "#/components/responses/401"
-        },
-        "404": {
-          "$ref": "#/components/responses/404"
-        },
-        "409": {
-          "description": "Recipe already in favorites",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "error": {
-                    "type": "string",
-                    "example": "Recipe is already in favorites"
-                  }
+        "responses": {
+          "200": {
+            "description": "Recipe successfully added to favorites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recipe"
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
-        },
-        "500": {
-          "$ref": "#/components/responses/500"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Favorites"
+        ],
+        "summary": "Remove recipe from favorites",
+        "operationId": "removeRecipeFromFavorites",
+        "description": "Removes a recipe from the user favorites list",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "recipeId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "64f1a2b3c9e7a1d2e8b12345",
+            "description": "Recipe ID to remove from favorites"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe successfully removed from favorites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recipe"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
         }
       }
     },
-
-    "delete": {
-      "tags": [
-        "Favorites"
-      ],
-      "summary": "Remove recipe from favorites",
-      "operationId": "removeRecipeFromFavorites",
-      "description": "Removes a recipe from the user favorites list",
-      "security": [
-        {
-          "BearerAuth": []
-        }
-      ],
-      "parameters": [
-        {
-          "in": "query",
-          "name": "recipeId",
-          "required": true,
-          "schema": {
-            "type": "string"
-          },
-          "example": "64f1a2b3c9e7a1d2e8b12345",
-          "description": "Recipe ID to remove from favorites"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Recipe successfully removed from favorites",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "success": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "message": {
-                    "type": "string",
-                    "example": "Recipe removed from favorites successfully"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "400": {
-          "$ref": "#/components/responses/400"
-        },
-        "401": {
-          "$ref": "#/components/responses/401"
-        },
-        "404": {
-          "$ref": "#/components/responses/404"
-        },
-        "500": {
-          "$ref": "#/components/responses/500"
-        }
-      }
-    }
-  },
     "/api/ingredient": {
       "get": {
         "tags": [
@@ -603,8 +608,30 @@
           "Categories"
         ],
         "summary": "Get all categories",
-        "operationId": "getAllCategories",
         "description": "Public endpoint. Returns an array of categories.",
+        "operationId": "getAllCategories",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number for pagination",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          }
+        ],
         "security": [],
         "responses": {
           "200": {
