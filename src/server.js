@@ -9,6 +9,8 @@ import swaggerDocument from '../docs/swagger.json' with { type: 'json' };
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import categoriesRouter from './routers/categories.js';
+import { welcomeMessage } from './controllers/welcome.js';
+import ctrlWrapper from './utils/ctrlWrapper.js';
 
 
 export const setupServer = () => {
@@ -29,7 +31,7 @@ export const setupServer = () => {
   app.use('/api/categories', categoriesRouter);
   app.use('/api', router);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+  app.get('/', ctrlWrapper(welcomeMessage));
   app.use(notFoundHandler);
   app.use(errorHandler);
 

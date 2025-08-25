@@ -1,6 +1,6 @@
-import Category from '../models/category.js';
+import { CategoriesCollection } from '../models/category.js';
 
 export const getAllCategories = async () => {
-  const items = await Category.find().lean();
+  const items = await CategoriesCollection.find().lean();
   return items;
 };
