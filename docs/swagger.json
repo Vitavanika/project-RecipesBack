@@ -15,7 +15,7 @@
       "description": "Development server"
     },
     {
-      "url": "https://recipes-api.onrender.com",
+      "url": "https://project-recipesback.onrender.com",
       "description": "Production server"
     }
   ],
@@ -226,15 +226,24 @@
                   },
                   "ingredients": {
                     "type": "string",
-                    "example": "1 potato, 1 onion, 1 carrot"
+                    "example": [
+                      {
+                        "name": "Baking Powder",
+                        "quantity": "200g"
+                      },
+                      {
+                        "name": "Pears",
+                        "quantity": "2 tbsp"
+                      }
+                    ]
                   },
                   "instructions": {
                     "type": "string",
                     "example": "1. Peel and chop the potatoes. 2. Boil the potatoes until tender. 3. Mash the potatoes and add seasoning to taste."
                   },
-                  "categoryId": {
+                  "category": {
                     "type": "string",
-                    "example": "64f1a2c3e4b5d6f7a8b9c0d1"
+                    "example": "Starter"
                   },
                   "cookingTime": {
                     "type": "number",
