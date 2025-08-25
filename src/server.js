@@ -31,9 +31,8 @@ export const setupServer = () => {
   app.use('/api/ingredients', ingredientsRouter);
   app.use('/api/categories', categoriesRouter);
   app.use('/api/recipes', recipesRouter);
-  //app.use('/api', router);
-  app.use('api/auth', authRouter);
-  app.use('api/users', usersRouter);
+  app.use('/api/auth', authRouter);
+  app.use('/api/users', usersRouter);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.get('/', ctrlWrapper(welcomeMessage));
   app.use(notFoundHandler);
