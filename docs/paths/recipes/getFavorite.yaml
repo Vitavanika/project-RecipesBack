@@ -1,0 +1,69 @@
+tags:
+  - Favorites
+summary: Get user's favorite recipes
+operationId: getFavoriteRecipes
+description: 'Retrieves all recipes from the user favorites list'
+security:
+  - BearerAuth: []
+parameters:
+  - in: query
+    name: page
+    required: false
+    schema:
+      type: integer
+      minimum: 1
+      default: 1
+    example: 1
+    description: Page number for pagination
+  - in: query
+    name: limit
+    required: false
+    schema:
+      type: integer
+      minimum: 1
+      maximum: 100
+      default: 10
+    example: 10
+    description: Number of recipes per page
+  - in: query
+    name: sortBy
+    required: false
+    schema:
+      type: string
+      enum: [dateAdded, recipeName, cuisine]
+      default: dateAdded
+    example: dateAdded
+    description: Sort favorites by specified field
+  - in: query
+    name: sortOrder
+    required: false
+    schema:
+      type: string
+      enum: [asc, desc]
+      default: desc
+    example: desc
+    description: Sort order (ascending or descending)
+responses:
+  '200':
+    description: Successfully retrieved favorite recipes
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            data:
+              type: object
+              properties:
+                favorites:
+                  type: array
+                  items:
+                    $ref: '../../components/schemas/Recipe.yaml'
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

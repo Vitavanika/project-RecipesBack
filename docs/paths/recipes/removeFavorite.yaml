@@ -4,26 +4,27 @@ summary: Remove recipe from favorites
 operationId: removeRecipeFromFavorites
 description: 'Removes a recipe from the user favorites list'
 security:
-  - bearerAuth: []
+  - BearerAuth: []
 parameters:
-  - in: path
+  - in: query
     name: recipeId
     required: true
     schema:
       type: string
-      example: '64f1a2b3c9e7a1d2e8b12345'
+    example: '64f1a2b3c9e7a1d2e8b12345'
+    description: Recipe ID to remove from favorites
 responses:
   '200':
     description: Recipe successfully removed from favorites
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/FavoritesResponse.yaml'
+          $ref: '../../components/schemas/Recipe.yaml'
   '400':
-    $ref: '../../../components/responses/400.yaml'
+    $ref: '../../components/responses/400.yaml'
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    $ref: '../../components/responses/401.yaml'
   '404':
-    $ref: '../../../components/responses/404.yaml'
+    $ref: '../../components/responses/404.yaml'
   '500':
-    $ref: '../../../components/responses/500.yaml'
+    $ref: '../../components/responses/500.yaml'

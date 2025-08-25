@@ -1,8 +1,23 @@
 tags:
 - Categories
 summary: Get all categories
-operationId: getAllCategories
 description: Public endpoint. Returns an array of categories.
+operationId: getAllCategories
+parameters:
+  - name: page
+    in: query
+    description: Page number for pagination
+    required: false
+    schema:
+      type: integer
+      example: 1
+  - name: limit
+    in: query
+    description: Number of items per page
+    required: false
+    schema:
+      type: integer
+      example: 10
 security: []
 responses:
   "200":
