@@ -10,34 +10,7 @@ parameters:
     schema: { type: integer, minimum: 1, default: 1 }
   - in: query
     name: perPage
-    schema: { type: integer, minimum: 1, maximum: 100, default: 10 }
-  - in: query
-    name: sortBy
-    schema:
-      type: string
-      enum: [title, createdAt, updatedAt, isFavorite]
-      default: createdAt
-  - in: query
-    name: sortOrder
-    schema:
-      type: string
-      enum: [asc, desc]
-      default: desc
-  - in: query
-    name: q
-    schema: { type: string }
-    description: Full-text or regex search by title/description
-  - in: query
-    name: tags
-    schema: { type: string }
-    description: CSV list; returns recipes that include all tags
-  - in: query
-    name: isFavorite
-    schema: { type: boolean }
-  - in: query
-    name: fields
-    schema: { type: string }
-    description: CSV projection (e.g. title,description,tags)
+    schema: { type: integer, minimum: 1, maximum: 100, default: 12 }
 responses:
   '200':
     description: OK
@@ -60,7 +33,7 @@ responses:
                   items:
                     $ref: '../../components/schemas/Recipe.yaml'
                 page: { type: integer, example: 1 }
-                perPage: { type: integer, example: 10 }
+                perPage: { type: integer, example: 12 }
                 total: { type: integer, example: 37 }
                 totalPages: { type: integer, example: 4 }
   '401':

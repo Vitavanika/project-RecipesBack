@@ -56,7 +56,12 @@ responses:
                 hasNextPage:
                   type: boolean
                   example: true
-  '401':
-    description: Unauthorized - authentication required
+  '404':
+    description: Not found
+    $ref: '../../components/responses/500.yaml'
+  '400':
+    description: Bad request
+    $ref: '../../components/responses/400.yaml'
   '500':
     description: Error retrieving recipes
+    $ref: '../../components/responses/500.yaml'

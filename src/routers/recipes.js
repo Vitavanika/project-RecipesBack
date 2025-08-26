@@ -20,8 +20,8 @@ recipesRouter.get('/own', authenticate, ctrlWrapper(getOwnRecipes));
 recipesRouter.get('/favorites', authenticate, ctrlWrapper(getFavoritesRecipes));
 recipesRouter.get('/:id', isValidId, ctrlWrapper(getRecipeByIdController))
 recipesRouter.get('/', ctrlWrapper(getFilteredRecipes));
-recipesRouter.delete('/', authenticate, ctrlWrapper(removeRecipeFromFavorites));
+recipesRouter.delete('/favorites/:recipeId', authenticate, ctrlWrapper(removeRecipeFromFavorites));
 recipesRouter.post('/', authenticate, upload.single('photo'), parseFormDataArrays, validateBody(createRecipeSchema), ctrlWrapper(createRecipeController));
-recipesRouter.post('/favorites', authenticate, ctrlWrapper(addRecipeToFavorites));
+recipesRouter.post('/favorites/:recipeId', authenticate, ctrlWrapper(addRecipeToFavorites));
 
 export default recipesRouter;
