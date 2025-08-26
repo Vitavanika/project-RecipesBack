@@ -388,7 +388,7 @@
     "/api/recipes/favorite": {
       "get": {
         "tags": [
-          "Recipes"
+          "Favorites"
         ],
         "summary": "Get user's favorite recipes",
         "description": "Returns a paginated list of favorite recipes for the authenticated user.",
