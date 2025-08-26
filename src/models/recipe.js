@@ -11,7 +11,7 @@ const recipeSchema = new Schema(
         {
           // Note: we expect an ingredient name in the request, that we match to id from ingredients db later on recipe doc creation
           // Remember to do it in service layer!
-          ingredientId: {
+          _id: {
             type: Schema.Types.ObjectId,
             ref: 'ingredients',
           },
