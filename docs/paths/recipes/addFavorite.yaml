@@ -13,19 +13,6 @@ parameters:
       type: string
       example: '64f1a2b3c9e7a1d2e8b12345'
     description: ID of the recipe to add to favorites
-# requestBody:
-#   required: true
-#   content:
-#     application/json:
-#       schema:
-#         type: object
-#         required:
-#           - recipeId
-#         properties:
-#           recipeId:
-#             type: string
-#             example: '64f1a2b3c9e7a1d2e8b12345'
-#             description: ID of the recipe to add to favorites
 responses:
   '200':
     description: Recipe successfully added to favorites
