@@ -1,15 +1,19 @@
-import { UsersCollection } from "../models/user.js";
+import { UsersCollection } from '../models/user.js';
 
 export const addRecipeToFavorites = async ({ userId, recipeId }) => {
   const user = await UsersCollection.findById(userId);
 
-  if (!user) throw new Error("User not found");
+  if (!user) throw new Error('User not found');
 
-  const alreadyFavorited = user.favorites.includes(recipeId);
-  if (alreadyFavorited) return user.favorites;
+  if (!Array.isArray(user.favouriteRecipes)) {
+    user.favouriteRecipes = [];
+  }
 
-  user.favorites.push(recipeId);
+  const alreadyFavorited = user.favouriteRecipes.includes(recipeId);
+  if (alreadyFavorited) return user.favouriteRecipes;
+
+  user.favouriteRecipes.push(recipeId);
   await user.save();
 
-  return user.favorites;
+  return user.favouriteRecipes;
 };
