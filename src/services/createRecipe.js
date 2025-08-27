@@ -1,6 +1,6 @@
 import { RecipesCollection } from '../models/recipe.js';
 import { IngredientsCollection } from '../models/ingredient.js';
-import { CategoriesCollection } from '../models/category.js';
+// import { CategoriesCollection } from '../models/category.js';
 
 export const createRecipe = async (payload) => {
   const allIngredients = await IngredientsCollection.find({});
@@ -23,7 +23,7 @@ export const createRecipe = async (payload) => {
   //     (cat) => cat.name.trim().toLowerCase() === normalizedCategoryName,
   //   );
   //   if (!categoryDoc) throw new Error(`Category "${payload.category}" not found`);
-  // У схемі змінилася властивість category
+  // У схемі змінилася властивість categoryId на category, тому цей код не потрібен, тепер зберігаємо назву категорії, а не її id
   const recipe = await RecipesCollection.create({
     ...payload,
     ingredients: ingredientsWithIds,
