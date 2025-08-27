@@ -5,8 +5,14 @@ export const removeRecipeFromFavorites = async ({ userId, recipeId }) => {
 
   if (!user) throw new Error("User not found");
 
-  user.favorites = user.favorites.filter(id => id.toString() !== recipeId);
+  if (!Array.isArray(user.favouriteRecipes)) {
+    user.favouriteRecipes = [];
+  }
+
+  user.favouriteRecipes = user.favouriteRecipes.filter(
+    (id) => id.toString() !== recipeId,
+  );
   await user.save();
 
-  return user.favorites;
+  return user.favouriteRecipes;
 };
