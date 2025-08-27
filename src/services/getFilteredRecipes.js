@@ -1,5 +1,5 @@
 import { RecipesCollection } from '../models/recipe.js';
-import { Types } from 'mongoose';
+// import { Types } from 'mongoose';
 
 export const getFilteredRecipes = async ({
   page = 1,
@@ -19,12 +19,11 @@ export const getFilteredRecipes = async ({
   }
 
   if (ingredients && ingredients.length > 0) {
-    const ingredientsArr = (
-      typeof ingredients === 'string' ? [ingredients] : ingredients
-    )
-      .map((id) => id.trim())
-      .filter((id) => Types.ObjectId.isValid(id))
-      .map((id) => Types.ObjectId.createFromHexString(id));
+    const ingredientsArr =
+      typeof ingredients === 'string' ? [ingredients] : ingredients;
+    // .map((id) => id.trim())
+    // .filter((id) => Types.ObjectId.isValid(id))
+    // .map((id) => Types.ObjectId.createFromHexString(id));
 
     if (ingredientsArr.length > 0) {
       filter['ingredients._id'] = { $in: ingredientsArr };
@@ -38,15 +37,53 @@ export const getFilteredRecipes = async ({
     ];
   }
 
-  const recipesQuery = RecipesCollection.find(filter).populate({
-    path: 'ingredients._id',
-    model: 'ingredients',
-  });
+  const pipeline = [
+    { $match: filter },
 
-  const [total, recipes] = await Promise.all([
-    RecipesCollection.countDocuments(filter),
-    recipesQuery.skip(skip).limit(limit).exec(),
-  ]);
+    { $unwind: '$ingredients' },
+
+    {
+      $lookup: {
+        from: 'ingredients',
+        localField: 'ingredients._id',
+        foreignField: '_id',
+        as: 'ingredientsData',
+      },
+    },
+    { $unwind: '$ingredientsData' },
+
+    {
+      $group: {
+        _id: '$_id',
+        title: { $first: '$title' },
+        category: { $first: '$category' },
+        owner: { $first: '$owner' },
+        ingredients: {
+          $push: {
+            _id: '$ingredientsData._id',
+            name: '$ingredientsData.name',
+            measure: '$ingredients.measure',
+          },
+        },
+        instructions: { $first: '$instructions' },
+        description: { $first: '$description' },
+        thumb: { $first: '$thumb' },
+        time: { $first: '$time' },
+        createdAt: { $first: '$createdAt' },
+        updatedAt: { $first: '$updatedAt' },
+        foodEnergy: { $first: '$foodEnergy' },
+      },
+    },
+    { $sort: { createdAt: -1 } },
+    { $skip: skip },
+    { $limit: limit },
+  ];
+
+  const recipes = await RecipesCollection.aggregate(pipeline);
+
+  const totalPipeline = [{ $match: filter }, { $count: 'total' }];
+  const totalResult = await RecipesCollection.aggregate(totalPipeline);
+  const total = totalResult[0] ? totalResult[0].total : 0;
 
   const totalPages = Math.ceil(total / limit);
 
