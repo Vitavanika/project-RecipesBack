@@ -13,7 +13,7 @@ export const createRecipe = async (payload) => {
       );
 
       if (!ingredientDoc) throw new Error(`Ingredient "${ing.name}" not found`);
-      return { _id: ingredientDoc._id, quantity: ing.quantity };
+      return { _id: ingredientDoc._id, measure: ing.quantity };
     }),
   );
 
