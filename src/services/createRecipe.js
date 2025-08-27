@@ -17,13 +17,8 @@ export const createRecipe = async (payload) => {
     }),
   );
 
-  //   const allCategories = await CategoriesCollection.find();
   const normalizedCategoryName = payload.category?.trim().toLowerCase();
-  //   const categoryDoc = allCategories.find(
-  //     (cat) => cat.name.trim().toLowerCase() === normalizedCategoryName,
-  //   );
-  //   if (!categoryDoc) throw new Error(`Category "${payload.category}" not found`);
-  // У схемі змінилася властивість categoryId на category, тому цей код не потрібен, тепер зберігаємо назву категорії, а не її id
+
   const recipe = await RecipesCollection.create({
     ...payload,
     ingredients: ingredientsWithIds,
