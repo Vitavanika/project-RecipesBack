@@ -8,6 +8,7 @@ export const getFilteredRecipes = async ({
   ingredients = [],
   searchPhrase,
 }) => {
+  console.log('🚀 ~ getFilteredRecipes ~ ingredients:', ingredients);
   const filter = {};
 
   const pageNum = Number(page) || 1;
@@ -20,14 +21,14 @@ export const getFilteredRecipes = async ({
 
   if (ingredients && ingredients.length > 0) {
     const ingredientsArr = (
-      typeof ingredients === 'string' ? ingredients.split(',') : ingredients
+      typeof ingredients === 'string' ? [ingredients] : ingredients
     )
       .map((id) => id.trim())
       .filter((id) => Types.ObjectId.isValid(id))
       .map((id) => Types.ObjectId.createFromHexString(id));
 
     if (ingredientsArr.length > 0) {
-      filter['ingredients._id'] = { $in: ingredientsArr };
+      filter['ingredients.ingredientId'] = { $in: ingredientsArr };
     }
   }
 
