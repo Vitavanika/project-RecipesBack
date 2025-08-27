@@ -27,7 +27,7 @@ export const getFilteredRecipes = async ({
       .map((id) => Types.ObjectId.createFromHexString(id));
 
     if (ingredientsArr.length > 0) {
-      filter['ingredients.ingredientId'] = { $in: ingredientsArr };
+      filter['ingredients._id'] = { $in: ingredientsArr };
     }
   }
 
