@@ -38,7 +38,10 @@ export const getFilteredRecipes = async ({
     ];
   }
 
-  const recipesQuery = RecipesCollection.find(filter);
+  const recipesQuery = await RecipesCollection.find(filter).populate({
+    path: 'ingredients._id',
+    model: 'ingredients',
+  });
 
   const [total, recipes] = await Promise.all([
     RecipesCollection.countDocuments(filter),
