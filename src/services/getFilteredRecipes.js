@@ -8,7 +8,6 @@ export const getFilteredRecipes = async ({
   ingredients = [],
   searchPhrase,
 }) => {
-  console.log('🚀 ~ getFilteredRecipes ~ ingredients:', ingredients);
   const filter = {};
 
   const pageNum = Number(page) || 1;
