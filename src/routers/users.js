@@ -5,6 +5,6 @@ import { getCurrentUser } from '../controllers/users.js';
 const usersRouter = Router();
 
 // Приватний ендпоінт для отримання інформації про поточного користувача
-usersRouter.get('/', authenticate, getCurrentUser);
+usersRouter.get('/current', authenticate, getCurrentUser);
 
 export default usersRouter;

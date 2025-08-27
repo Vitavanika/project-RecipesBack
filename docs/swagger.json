@@ -391,7 +391,7 @@
         }
       }
     },
-    "/api/recipes/favorite": {
+    "/api/recipes/favorites": {
       "get": {
         "tags": [
           "Favorites"
@@ -598,7 +598,7 @@
         }
       }
     },
-    "/api/ingredient": {
+    "/api/ingredients": {
       "get": {
         "tags": [
           "Ingredients"
@@ -710,7 +710,7 @@
         }
       }
     },
-    "/auth/register": {
+    "/api/auth/register": {
       "post": {
         "tags": [
           "Auth"
@@ -815,7 +815,7 @@
         }
       }
     },
-    "/auth/login": {
+    "/api/auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -897,7 +897,7 @@
         }
       }
     },
-    "/auth/logout": {
+    "/api/auth/logout": {
       "post": {
         "tags": [
           "Auth"
@@ -922,7 +922,7 @@
         }
       }
     },
-    "/auth/refresh": {
+    "/api/auth/refresh": {
       "post": {
         "tags": [
           "Auth"
