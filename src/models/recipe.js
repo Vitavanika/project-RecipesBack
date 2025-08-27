@@ -23,11 +23,7 @@ const recipeSchema = new Schema(
     instructions: { type: String, required: true },
     // Note: same deal as with ingredient: request passes a string instead of id
     // Remember to match with id in the service layer!
-    categoryId: {
-      type: Schema.Types.ObjectId,
-      ref: 'categories',
-      required: true,
-    },
+    category: { type: String, required: true },
     cookingTime: { type: Number, required: true },
     foodEnergy: { type: Number },
   },
@@ -38,8 +34,8 @@ const recipeSchema = new Schema(
 );
 
 recipeSchema.index({ userId: 1 });
-recipeSchema.index({ categoryId: 1 });
-recipeSchema.index({ 'ingredients.ingredientId': 1 });
+recipeSchema.index({ category: 1 });
+recipeSchema.index({ 'ingredients._id': 1 });
 recipeSchema.index({ name: 'text', description: 'text' });
 
 export const RecipesCollection = model('recipes', recipeSchema);
