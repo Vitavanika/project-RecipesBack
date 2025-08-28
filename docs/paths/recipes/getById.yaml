@@ -3,7 +3,8 @@ tags:
 summary: Get recipe by id
 operationId: getRecipe
 description: "Get recipe by id"
-security: []
+security:
+  - BearerAuth: []
 parameters:
 - in: path
   name: id
