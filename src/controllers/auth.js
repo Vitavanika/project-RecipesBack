@@ -9,15 +9,27 @@ import { THIRTY_DAYS } from '../constants.js';
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
 
+  const safeUser = {
+    name: user.name,
+    email: user.email,
+  };
+
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: user,
+    data: {
+      user: safeUser,
+    },
   });
 };
 
 export const loginUserController = async (req, res) => {
-  const session = await loginUser(req.body);
+  const { session, user } = await loginUser(req.body);
+  
+  const safeUser = {
+    name: user.name,
+    email: user.email,
+  };
 
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
@@ -32,6 +44,7 @@ export const loginUserController = async (req, res) => {
     status: 200,
     message: 'Successfully logged in an user!',
     data: {
+      user: safeUser,
       accessToken: session.accessToken,
     },
   });
