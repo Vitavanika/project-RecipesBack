@@ -1,6 +1,6 @@
 import { RecipesCollection } from '../models/recipe.js';
 import { IngredientsCollection } from '../models/ingredient.js';
-// import { CategoriesCollection } from '../models/category.js';
+import { CategoriesCollection } from '../models/category.js';
 
 export const createRecipe = async (payload) => {
   const allIngredients = await IngredientsCollection.find({});
@@ -17,12 +17,15 @@ export const createRecipe = async (payload) => {
     }),
   );
 
-  const normalizedCategoryName = payload.category?.trim().toLowerCase();
+  const category = await CategoriesCollection.findById(payload.category);
+
+  if (!category)
+    throw new Error(`Category with id "${payload.category}" not found`);
 
   const recipe = await RecipesCollection.create({
     ...payload,
     ingredients: ingredientsWithIds,
-    category: normalizedCategoryName,
+    category: category.name,
     cookingTime: Number(payload.cookingTime),
   });
 
