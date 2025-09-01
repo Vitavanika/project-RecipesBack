@@ -4,12 +4,12 @@ import {
   logoutUser,
   refreshUsersSession,
 } from '../services/auth.js';
-import { registerSchema, loginSchema } from '../schemas/auth.js';
-import { HttpError } from '../helpers/HttpError.js';
+import { registerUserSchema, loginUserSchema } from '../validation/auth.js';
+import HttpError from 'http-errors';
 import { THIRTY_DAYS } from '../constants.js';
 
 export const registerUserController = async (req, res) => {
-  const { error } = registerSchema.validate(req.body);
+  const { error } = registerUserSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.details[0].message);
   }
@@ -31,7 +31,7 @@ export const registerUserController = async (req, res) => {
 };
 
 export const loginUserController = async (req, res) => {
-  const { error } = loginSchema.validate(req.body);
+  const { error } = loginUserSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.details[0].message);
   }
