@@ -16,8 +16,15 @@ import ctrlWrapper from './utils/ctrlWrapper.js';
 
 export const setupServer = () => {
   const app = express();
+  const corsOptions = {
+    origin: [
+      'http://localhost:5173',
+      'https://project-recipes-front.vercel.app',
+    ],
+    credentials: true,
+  };
 
-  app.use(cors());
+  app.use(cors(corsOptions));
   app.use(cookieParser());
   app.use(
     pino({
