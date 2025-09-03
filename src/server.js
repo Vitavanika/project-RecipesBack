@@ -20,6 +20,7 @@ export const setupServer = () => {
     origin: [
       'http://localhost:5173',
       'https://project-recipes-front.vercel.app',
+      /https:\/\/project-recipes-front-[a-zA-Z0-9]+-vitavanikas-projects\.vercel\.app/,
     ],
     credentials: true,
   };
